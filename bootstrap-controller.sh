@@ -191,15 +191,12 @@ sed -i "s/ETH0NETMASK/$ETH0_NETMASK/g" /etc/network/interfaces.d/controller-inte
 sed -i "s/ETH0GATEWAY/$ETH0_GATEWAY/g" /etc/network/interfaces.d/controller-interfaces.cfg
 
 
-cp -R interfaces.template /etc/network/interface
+cp -R interfaces.template /etc/network/interfaces
 
 # Bring up the new interfaces
-#for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/controller-interfaces.cfg); do
-#    if grep "^$i\:" /proc/net/dev > /dev/null;then
-#      /sbin/ifdown $i || true
-#    fi
-#    /sbin/ifup $i || true
-#done
+for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/controller-interfaces.cfg); do
+    /sbin/ifup $i || true
+done
 
 # Instead of moving the AIO files in place, it will move our custom
 # configs in place.
