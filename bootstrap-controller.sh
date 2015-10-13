@@ -7,13 +7,36 @@
 # queue, and API services.
 # Auther(s):
 # Miguel Alex Cantu (miguel.cantu@rackspace.com)
+# Most content is from https://github.com/openstack/openstack-ansible/blob/master/scripts/bootstrap-aio.sh
+
+# Usage:
+# ./bootstrap-controller.sh <mgmt-ip>
+
+if [ $# -eq 0 ]
+then
+	echo "./generateInterfaces <mgmt-ip>"
+	exit
+fi
 
 set -e -u -x
 
+#export ETH0_NETMASK="$(ifconfig eth0 | grep Mask | awk -F ':' '{print $4}')"
+export ETH0_NETMASK="255.255.252.0"
+export ETH0_GATEWAY="$(ip r | grep default | awk '{print $3}')"
+export MANAGEMENT_IP=$1
+export DEFAULT_PASSWORD="openstack"
+export OPENSTACK_ANSIBLE_TAG="11.2.3"
 
 export ADMIN_PASSWORD=${ADMIN_PASSWORD:-$DEFAULT_PASSWORD}
 export PUBLIC_INTERFACE=${PUBLIC_INTERFACE:-$(ip route show | awk '/default/ { print $NF }')}
-export PUBLIC_ADDRESS=${PUBLIC_ADDRESS:-$(ip -o -4 addr show dev ${PUBLIC_INTERFACE} | awk -F '[ /]+' '/global/ {print $4}')}
+
+# If br-mgmt bridge is up already, use that for public address and interface.
+if grep "br-mgmt" /proc/net/dev > /dev/null;then
+  export PUBLIC_INTERFACE="br-mgmt"
+  export PUBLIC_ADDRESS=${PUBLIC_ADDRESS:-$(ip -o -4 addr show dev ${PUBLIC_INTERFACE} | awk -F '[ /]+' '/global/ {print $4}' | head -n 1)}
+else 
+  export PUBLIC_ADDRESS=${PUBLIC_ADDRESS:-$(ip -o -4 addr show dev ${PUBLIC_INTERFACE} | awk -F '[ /]+' '/global/ {print $4}')}
+fi
 
 UBUNTU_RELEASE=$(lsb_release -sc)
 UBUNTU_REPO=${UBUNTU_REPO:-$(awk "/^deb .*ubuntu\/? ${UBUNTU_RELEASE} main/ {print \$2; exit}" /etc/apt/sources.list)}
@@ -90,6 +113,14 @@ if [ ! -d "/opt" ];then
   mkdir /opt
 fi
 
+# Clone openstack-ansible playbooks if not already done so.
+if [ ! -d "/opt/openstack-ansible" ];then
+  git clone https://github.com/openstack/openstack-ansible.git /opt/openstack-ansible
+  pushd /opt/openstack-ansible
+    git checkout $OPENSTACK_ANSIBLE_TAG
+  popd
+fi
+
 # Remove the pip directory if its found
 if [ -d "${HOME}/.pip" ];then
   rm -rf "${HOME}/.pip"
@@ -151,13 +182,19 @@ if [ ! -d "/etc/network/interfaces.d" ];then
 fi
 
 # Copy the basic aio network interfaces over
-cp -R controller-interfaces.cfg /etc/network/interfaces.d/
+cp -R controller-interfaces.cfg.template /etc/network/interfaces.d/controller-interfaces.cfg
 
-# ------------ Come back to this -------------
-## NOTE: We have to ensure network source is in place for network
-## configs to take place.
+# Modify the file to match the IPs given by the user.
+sed -i "s/ETH0IP/$PUBLIC_ADDRESS/g" /etc/network/interfaces.d/controller-interfaces.cfg
+sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/network/interfaces.d/controller-interfaces.cfg
+sed -i "s/ETH0NETMASK/$ETH0_NETMASK/g" /etc/network/interfaces.d/controller-interfaces.cfg
+sed -i "s/ETH0GATEWAY/$ETH0_GATEWAY/g" /etc/network/interfaces.d/controller-interfaces.cfg
+
+
+cp -R interfaces.template /etc/network/interface
+
 # Bring up the new interfaces
-#for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/aio_interfaces.cfg); do
+#for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/controller-interfaces.cfg); do
 #    if grep "^$i\:" /proc/net/dev > /dev/null;then
 #      /sbin/ifdown $i || true
 #    fi
@@ -166,7 +203,10 @@ cp -R controller-interfaces.cfg /etc/network/interfaces.d/
 
 # Instead of moving the AIO files in place, it will move our custom
 # configs in place.
-#cp -R etc/openstack_deploy /etc/
+cp -R openstack_deploy/ /etc/
+
+#Substitue the IPs with the user-defined IPs
+
 #for i in $(find /etc/openstack_deploy/ -type f -name '*.aio');do
 #  rename 's/\.aio$//g' $i
 #done

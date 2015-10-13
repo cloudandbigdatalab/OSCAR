@@ -45,20 +45,19 @@ iface br-mgmt inet static
     bridge_waitport 0
     bridge_fd 0
     bridge_ports eth0 br-vxlan-veth br-storage-veth
-    address ETH0-IP
-    netmask 255.255.252.0
-    gateway 10.20.109.254
+    address ETH0IP
+    netmask ETH0NETMASK
+    # The gateway of sharednet on chameleon cloud
+    gateway ETH0GATEWAY
     # Configure the management network as a sub-interface. 
     # This network does not have a gateway
-    up ip addr add MGMT-IP/24 dev $IFACE label $IFACE:0
+    up ip addr add MGMTIP/24 dev $IFACE label $IFACE:0
 
 
 # Mandatory
 # Provides infrastructure for VXLAN tunnel/overlay networks.
 auto br-vxlan
-iface br-vxlan inet static
-    address VXLAN_IP
-    netmask 255.255.255.0
+iface br-vxlan inet manual
     bridge_stp off
     bridge_waitport 0
     bridge_fd 0
@@ -68,9 +67,7 @@ iface br-vxlan inet static
 # Provides segregated access to block storage devices between 
 # Compute and Block Storage hosts.
 auto br-storage
-iface br-storage inet static
-    address STORAGE_IP
-    netmask 255.255.255.0
+iface br-storage inet manual
     bridge_stop off
     bridge_waitport 0
     bridge_fd 0
@@ -79,12 +76,10 @@ iface br-storage inet static
 # Mandatory
 # Provides infrastructure for VLAN and flat networks.
 auto br-vlan
-iface br-vlan inet static
+iface br-vlan inet manual
     bridge_stp off
     bridge_waitport 0
     bridge_fd 0
-    address VLAN_IP
-    netmask 255.255.255.0
     offload-sg off
     bridge_ports em17
 
