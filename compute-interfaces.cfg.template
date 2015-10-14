@@ -1,4 +1,4 @@
-# This is a base networking configuration for a controller node on the Chamelon Cloud.
+# This is a base networking configuration for a compute node on the Chamelon Cloud.
 # All bridges are required, and all engress traffic flows through the br-mgmt bridge
 # through the use of veth pairs. 
 # In the Openstack Ansible Deployment architecture, each type of network traffic
