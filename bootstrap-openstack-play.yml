@@ -1,3 +1,5 @@
 ---
 # This play will include bootstrap-controller-play and
 # bootstrap-computes-play
+- include: bootstrap-controller-play.yml
+- include: bootstrap-computes-play.yml

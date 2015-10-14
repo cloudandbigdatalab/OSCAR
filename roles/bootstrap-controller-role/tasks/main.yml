@@ -18,3 +18,6 @@
 
 #- name: Run the bootstrap-controller.sh script
 #  script: bootstrap-compute.sh {{ compute_mgmt_ip }} {{ compute_vxlan_ip }} {{ compute_storage_ip }}
+
+- name: Run the bootstrap-controller.sh script
+  script: bootstrap-controller.sh {{ controller_mgmt_ip }} {{ compute1_mgmt_ip }} {{ compute2_mgmt_ip }} {{ compute3_mgmt_ip }} {{ container_network }} {{ tunnel_network }} {{ storage_network }}

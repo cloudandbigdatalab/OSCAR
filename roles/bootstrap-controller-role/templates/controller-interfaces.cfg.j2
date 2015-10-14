@@ -44,7 +44,7 @@ iface br-mgmt inet static
     bridge_stp off
     bridge_waitport 0
     bridge_fd 0
-    bridge_ports eth0 br-vxlan-veth br-storage-veth
+    bridge_ports eth0 br-vxlan-veth br-storage-veth br-vlan-veth
     address {{ ansible_default_ipv4.address }}
     netmask {{ ansible_default_ipv4.netmask }}
     # The gateway of sharednet on chameleon cloud

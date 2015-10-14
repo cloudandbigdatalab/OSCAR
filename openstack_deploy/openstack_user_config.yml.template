@@ -1,6 +1,6 @@
 ---
 cidr_networks:
-  container: CONTINER_NETWORK
+  container: CONTAINER_NETWORK
   tunnel: TUNNEL_NETWORK
   storage: STORAGE_NETWORK
 

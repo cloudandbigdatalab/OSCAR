@@ -161,7 +161,7 @@ if [ ! "$(which pip)" ]; then
 fi
 
 # Install pip requirements
-pip install pycrypto
+pip install pycrypto netaddr
 
 # Make the system key used for bootstrapping self
 if [ ! -d /root/.ssh ];then
@@ -191,20 +191,20 @@ if ! grep -q "${key_content}" ${key_path}/authorized_keys; then
 fi
 
 # Copy aio network config into place.
-if [ ! -d "/etc/network/interfaces.d" ];then
-  mkdir -p /etc/network/interfaces.d/
-fi
-
-# Copy the basic aio network interfaces over
-cp -R controller-interfaces.cfg.template /etc/network/interfaces.d/controller-interfaces.cfg
-
-# Modify the file to match the IPs given by the user.
-sed -i "s/ETH0IP/$PUBLIC_ADDRESS/g" /etc/network/interfaces.d/controller-interfaces.cfg
-sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/network/interfaces.d/controller-interfaces.cfg
-sed -i "s/ETH0NETMASK/$ETH0_NETMASK/g" /etc/network/interfaces.d/controller-interfaces.cfg
-sed -i "s/ETH0GATEWAY/$ETH0_GATEWAY/g" /etc/network/interfaces.d/controller-interfaces.cfg
-
-cp -R interfaces.template /etc/network/interfaces
+#if [ ! -d "/etc/network/interfaces.d" ];then
+#  mkdir -p /etc/network/interfaces.d/
+#fi
+#
+## Copy the basic aio network interfaces over
+#cp -R controller-interfaces.cfg.template /etc/network/interfaces.d/controller-interfaces.cfg
+#
+## Modify the file to match the IPs given by the user.
+#sed -i "s/ETH0IP/$PUBLIC_ADDRESS/g" /etc/network/interfaces.d/controller-interfaces.cfg
+#sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/network/interfaces.d/controller-interfaces.cfg
+#sed -i "s/ETH0NETMASK/$ETH0_NETMASK/g" /etc/network/interfaces.d/controller-interfaces.cfg
+#sed -i "s/ETH0GATEWAY/$ETH0_GATEWAY/g" /etc/network/interfaces.d/controller-interfaces.cfg
+#
+#cp -R interfaces.template /etc/network/interfaces
 
 # Bring up the new interfaces
 for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/controller-interfaces.cfg); do

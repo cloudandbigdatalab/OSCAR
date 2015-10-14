@@ -1,8 +1,0 @@
----
-
-- name: Boostrap the controller node
-  hosts: controller
-  user: root
-  pre-tasks:
-    - name: debug controller management IP
-      debug: var=
