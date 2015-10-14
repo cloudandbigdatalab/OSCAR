@@ -1,13 +1,12 @@
-# This script bootstraps a controller node on UTSA's chameleon cloud.
+# This script bootstraps a compute node on UTSA's chameleon cloud.
 # It takes all the actions necessary for the deployment of the 
-# controller according the the Openstack Ansible Deployment(OSD) 
+# compute node according the the Openstack Ansible Deployment(OSD) 
 # architecture (https://github.com/openstack/openstack-ansible).
-# This script does not deploy a highly available controller node.
-# The container affinity is set to 1 for the database, messaging
-# queue, and API services.
 # Auther(s):
 # Miguel Alex Cantu (miguel.cantu@rackspace.com)
 # Mohan Muppidi (Mohan.muppidi@utsa.edu)
+
+# IN PROGRESS...
 
 set -e -u -x
 
