@@ -58,7 +58,7 @@ iface br-mgmt inet static
 # Provides infrastructure for VXLAN tunnel/overlay networks.
 auto br-vxlan
 iface br-vxlan inet manual
-    address 172.29.240.5
+    address VXLAN_IP
     netmask 255.255.255.0
     bridge_stp off
     bridge_waitport 0
@@ -70,7 +70,7 @@ iface br-vxlan inet manual
 # Compute and Block Storage hosts.
 auto br-storage
 iface br-storage inet manual
-    address 172.29.244.5
+    address STORAGE_IP
     netmask 255.255.255.0
     bridge_stop off
     bridge_waitport 0
