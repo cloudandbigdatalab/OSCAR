@@ -12,13 +12,14 @@
 # Usage:
 # ./bootstrap-controller.sh <mgmt-ip>
 
-if [ $# -lt 4 ]
+if [ $# -lt 7 ]
 then
-	echo "./generateInterfaces <mgmt-ip-controller> <mgmt-ip-compute1> <mgmt-ip-compute2> <mgmt-ip-compute3>"
+	echo "./bootstrap-controller.sh <mgmt-ip-controller> <mgmt-ip-compute1> <mgmt-ip-compute2> <mgmt-ip-compute3> <container-net> <tunnel-net> <storage-net>"
 	exit
 fi
 
-set -e -u -x
+# For debugging only
+#set -e -u -x
 
 #export ETH0_NETMASK="$(ifconfig eth0 | grep Mask | awk -F ':' '{print $4}')"
 export ETH0_NETMASK="255.255.252.0"
@@ -28,6 +29,12 @@ export MANAGEMENT_IP=$1
 export MANAGEMENT_IP_COMPUTE1=$2
 export MANAGEMENT_IP_COMPUTE2=$3
 export MANAGEMENT_IP_COMPUTE3=$4
+CONTAINER_NETWORK=$5
+export CONTAINER_NETWORK=$(echo $CONTAINER_NETWORK | sed 's/\//\\\//g')
+TUNNEL_NETWORK=$6
+export TUNNEL_NETWORK=$(echo $TUNNEL_NETWORK | sed 's/\//\\\//g')
+STORAGE_NETWORK=$7
+export STORAGE_NETWORK=$(echo $STORAGE_NETWORK | sed 's/\//\\\//g')
 export DEFAULT_PASSWORD="openstack"
 export OPENSTACK_ANSIBLE_TAG="11.2.3"
 
@@ -104,6 +111,9 @@ iptables -t mangle -X
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
+
+# Install python modules
+pip install pycrypto
 
 # Ensure that sshd permits root login, or ansible won't be able to connect
 if grep "^PermitRootLogin" /etc/ssh/sshd_config > /dev/null; then
@@ -203,37 +213,33 @@ done
 
 # Instead of moving the AIO files in place, it will move our custom
 # configs in place.
-cp -R openstack_deploy/ /etc/
+cp -R openstack_deploy/ /etc/openstack_deploy/
+cp openstack_deploy/openstack_user_config.yml.template /etc/openstack_deploy/openstack_user_config.yml
 
-#Substitue the IPs with the user-defined IPs
+#Substitue the IPs in the openstack_user_config.yml with the user-defined IPs
+sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/openstack_deploy/openstack_user_config.yml
+sed -i "s/COMPUTE1IP/$MANAGEMENT_IP_COMPUTE1/g" /etc/openstack_deploy/openstack_user_config.yml
+sed -i "s/COMPUTE2IP/$MANAGEMENT_IP_COMPUTE2/g" /etc/openstack_deploy/openstack_user_config.yml
+sed -i "s/COMPUTE3IP/$MANAGEMENT_IP_COMPUTE3/g" /etc/openstack_deploy/openstack_user_config.yml
 
-#for i in $(find /etc/openstack_deploy/ -type f -name '*.aio');do
-#  rename 's/\.aio$//g' $i
-#done
+# Populate the cidr_networks in the /etc/openstack_deploy/openstack_user_config.yml
+sed -i "s/CONTAINER_NETWORK/$CONTAINER_NETWORK/g" /etc/openstack_deploy/openstack_user_config.yml
+sed -i "s/TUNNEL_NETWORK/$TUNNEL_NETWORK/g" /etc/openstack_deploy/openstack_user_config.yml
+sed -i "s/STORAGE_NETWORK/$STORAGE_NETWORK/g" /etc/openstack_deploy/openstack_user_config.yml 
 
 # Ensure the conf.d directory exists
-#if [ ! -d "/etc/openstack_deploy/conf.d" ];then
-#  mkdir -p "/etc/openstack_deploy/conf.d"
-#fi
+if [ ! -d "/etc/openstack_deploy/conf.d" ];then
+  mkdir -p "/etc/openstack_deploy/conf.d"
+fi
 
 # Generate the passwords
-# scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
 
 #change the generated passwords for the OpenStack (admin)
-#sed -i "s/keystone_auth_admin_password:.*/keystone_auth_admin_password: ${ADMIN_PASSWORD}/" /etc/openstack_deploy/user_secrets.yml
-#sed -i "s/external_lb_vip_address:.*/external_lb_vip_address: ${PUBLIC_ADDRESS}/" /etc/openstack_deploy/openstack_user_config.yml
+sed -i "s/keystone_auth_admin_password:.*/keystone_auth_admin_password: ${ADMIN_PASSWORD}/" /etc/openstack_deploy/user_secrets.yml
+sed -i "s/external_lb_vip_address:.*/external_lb_vip_address: ${PUBLIC_ADDRESS}/" /etc/openstack_deploy/openstack_user_config.yml
 
-# Change affinities (number of containers per host) if the appropriate
-# environment variables are set.
-#for container_type in keystone galera rabbit_mq horizon repo; do
-#  var_name="NUM_${container_type}_CONTAINER"
-#  set +u
-#  num=${!var_name}
-#  set -u
-#  [[ -z $num ]] && continue
-#  sed -i "s/${container_type}_container:.*/${container_type}_container: ${num}/" /etc/openstack_deploy/openstack_user_config.yml
-#done
-
+# TODO: Maybe save this for some later time. - Alex
 #if [ ${DEPLOY_CEILOMETER} == "yes" ]; then
 #  # Install mongodb on the aio1 host
 #  apt-get install mongodb-server mongodb-clients python-pymongo -y < /dev/null
@@ -278,25 +284,13 @@ cp -R openstack_deploy/ /etc/
 ## Virt type set
 #echo "nova_virt_type: ${NOVA_VIRT_TYPE}" | tee -a /etc/openstack_deploy/user_variables.yml
 #
-## Set network for tempest
-#echo "tempest_public_subnet_cidr: ${TEMPEST_FLAT_CIDR}" | tee -a /etc/openstack_deploy/user_variables.yml
 #
-## Minimize galera cache
-#echo 'galera_innodb_buffer_pool_size: 512M' | tee -a /etc/openstack_deploy/user_variables.yml
-#echo 'galera_innodb_log_buffer_size: 32M' | tee -a /etc/openstack_deploy/user_variables.yml
-#echo 'galera_wsrep_provider_options:
-# - { option: "gcache.size", value: "32M" }' | tee -a /etc/openstack_deploy/user_variables.yml
-#
+
 ## Set the running kernel as the required kernel
-#echo "required_kernel: $(uname --kernel-release)" | tee -a /etc/openstack_deploy/user_variables.yml
-#
+echo "required_kernel: $(uname --kernel-release)" | tee -a /etc/openstack_deploy/user_variables.yml
+
 ## Set the Ubuntu apt repository used for containers to the same as the host
-#echo "lxc_container_template_main_apt_repo: ${UBUNTU_REPO}" | tee -a /etc/openstack_deploy/user_variables.yml
-#echo "lxc_container_template_security_apt_repo: ${UBUNTU_SEC_REPO}" | tee -a /etc/openstack_deploy/user_variables.yml
-#
-## Set the running neutron workers to 0/1
-#echo "neutron_api_workers: 0" | tee -a /etc/openstack_deploy/user_variables.yml
-#echo "neutron_rpc_workers: 0" | tee -a /etc/openstack_deploy/user_variables.yml
-#echo "neutron_metadata_workers: 1" | tee -a /etc/openstack_deploy/user_variables.yml
+echo "lxc_container_template_main_apt_repo: ${UBUNTU_REPO}" | tee -a /etc/openstack_deploy/user_variables.yml
+echo "lxc_container_template_security_apt_repo: ${UBUNTU_SEC_REPO}" | tee -a /etc/openstack_deploy/user_variables.yml
 
 echo "------DONE!!------"
