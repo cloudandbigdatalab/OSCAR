@@ -190,7 +190,6 @@ sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/network/interfaces.d/controller-interfac
 sed -i "s/ETH0NETMASK/$ETH0_NETMASK/g" /etc/network/interfaces.d/controller-interfaces.cfg
 sed -i "s/ETH0GATEWAY/$ETH0_GATEWAY/g" /etc/network/interfaces.d/controller-interfaces.cfg
 
-
 cp -R interfaces.template /etc/network/interfaces
 
 # Bring up the new interfaces
