@@ -189,7 +189,10 @@ sed -i "s/STORAGE_IP/$STORAGE_IP/g" /etc/network/interfaces.d/compute-interfaces
 
 cp -R interfaces.template /etc/network/interfaces
 
-
+# Bring up the new interfaces
+for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/controller-interfaces.cfg); do
+    /sbin/ifup $i || true
+done
 
 
 
