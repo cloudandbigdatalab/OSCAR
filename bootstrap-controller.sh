@@ -12,9 +12,9 @@
 # Usage:
 # ./bootstrap-controller.sh <mgmt-ip>
 
-if [ $# -eq 0 ]
+if [ $# -lt 4 ]
 then
-	echo "./generateInterfaces <mgmt-ip>"
+	echo "./generateInterfaces <mgmt-ip-controller> <mgmt-ip-compute1> <mgmt-ip-compute2> <mgmt-ip-compute3>"
 	exit
 fi
 
@@ -23,7 +23,11 @@ set -e -u -x
 #export ETH0_NETMASK="$(ifconfig eth0 | grep Mask | awk -F ':' '{print $4}')"
 export ETH0_NETMASK="255.255.252.0"
 export ETH0_GATEWAY="$(ip r | grep default | awk '{print $3}')"
+
 export MANAGEMENT_IP=$1
+export MANAGEMENT_IP_COMPUTE1=$2
+export MANAGEMENT_IP_COMPUTE2=$3
+export MANAGEMENT_IP_COMPUTE3=$4
 export DEFAULT_PASSWORD="openstack"
 export OPENSTACK_ANSIBLE_TAG="11.2.3"
 
