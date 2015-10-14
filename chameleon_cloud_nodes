@@ -1,7 +1,16 @@
 [controller]
 
+[controller:vars]
+controller_mgmt_ip="172.16.100.100"
+compute1_mgmt_ip="172.16.100.101"
+compute2_mgmt_ip="172.16.100.102"
+compute3_mgmt_ip="172.16.100.103"
+container_network="172.16.100.0/24"
+tunnel_network="172.16.101.0/24"
+storage_network="172.16.102.0/24"
+
 [compute1]
-10.20.108.214
+10.20.108.23
 
 [compute1:vars]
 compute_mgmt_ip="172.16.100.101"

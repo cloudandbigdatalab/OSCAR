@@ -1,0 +1,20 @@
+- name: Copy over the controller-interfaces template
+  template:
+    src: controller-interfaces.cfg.j2
+    dest: "/etc/network/interfaces.d/controller-interfaces.cfg"
+    owner: "root"
+    group: "root"
+  tags:
+    - copy-network-template
+
+- name: Copy over the interfaces template
+  template:
+    src: interfaces.j2
+    dest: "/etc/network/interfaces"
+    owner: "root"
+    group: "root"
+  tags:
+    - copy-network-interfaces
+
+#- name: Run the bootstrap-controller.sh script
+#  script: bootstrap-compute.sh {{ compute_mgmt_ip }} {{ compute_vxlan_ip }} {{ compute_storage_ip }}
