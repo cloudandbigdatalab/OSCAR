@@ -1,0 +1,12 @@
+---
+- name: Bootstrap the compute nodes
+  hosts: controller
+  user: root
+  tasks:
+    - name: debug mgmt-ip for compute node
+      debug: var=controller_mgmt_ip
+  roles:
+    - role: bootstrap-controller-role
+      tags:
+        - "bootstrap-controller"
+  
