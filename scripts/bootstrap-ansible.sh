@@ -59,6 +59,29 @@ elif [ -n "$HTTP_PROXY" ]; then
   PIP_OPTS="--proxy $HTTP_PROXY"
 fi
 
+# get pip
+# if pip is already installed, don't bother doing anything
+if [ ! "$(which pip)" ]; then
+
+  # if GET_PIP_URL is set, then just use it
+  if [ -z "${GET_PIP_URL:-}" ]; then
+
+    # Find and use an available get-pip download location.
+    if curl --silent https://bootstrap.pypa.io/get-pip.py; then
+      export GET_PIP_URL='https://bootstrap.pypa.io/get-pip.py'
+    elif curl --silent https://raw.github.com/pypa/pip/master/contrib/get-pip.py; then
+      export GET_PIP_URL='https://raw.github.com/pypa/pip/master/contrib/get-pip.py'
+    else
+      echo "A suitable download location for get-pip.py could not be found."
+      exit_fail
+    fi
+  fi
+
+  # Download and install pip
+  curl ${GET_PIP_URL} > /opt/get-pip.py
+  python2 /opt/get-pip.py || python /opt/get-pip.py
+fi
+
 # Install requirements if there are any
 if [ -f "requirements.txt" ];then
   pip2 install $PIP_OPTS -r requirements.txt || pip install $PIP_OPTS -r requirements.txt
