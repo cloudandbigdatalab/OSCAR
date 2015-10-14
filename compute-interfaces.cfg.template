@@ -1,0 +1,97 @@
+# This is a base networking configuration for a compute node on the Chamelon Cloud.
+# All bridges are required, and all engress traffic flows through the br-mgmt bridge
+# through the use of veth pairs. 
+# In the Openstack Ansible Deployment architecture, each type of network traffic
+# requires a bridge. For an explanation of each bridge, please visit:
+# http://docs.openstack.org/developer/openstack-ansible/install-guide/overview-hostnetworking.html
+
+# The physical interface.
+# Bare metal nodes on Chamelon Cloud only have one active physical interface.
+auto eth0
+iface eth0 inet manual
+
+
+# The management network, or container network. This network is 
+# for management and API services. All containers will connect to 
+# this bridge using veth pairs. To preserve the original IP assigned
+# by Chameleon Cloud, the actual IP on the management network is added
+# as a "sub interface". This bridge has two IPs:
+# * The original IP assigned from Chameleon Cloud
+# * The management network IP. This is arbirary.
+auto br-mgmt
+iface br-mgmt inet static
+    # Create veth pair, don't bomb if already exists
+    # These veth pairs are for connecting the other bridges to this one,
+    # since the Controller only has one active physical interface.
+    pre-up ip link add br-vxlan-veth type veth peer name em15 || true
+    pre-up ip link add br-storage-veth type veth peer name em16 || true
+    pre-up ip link add br-vlan-veth type veth peer name em17 || true
+    # Set both ends UP
+    pre-up ip link set br-vxlan-veth up
+    pre-up ip link set em15 up
+    pre-up ip link set br-storage-veth up
+    pre-up ip link set em16 up
+    pre-up ip link set br-vlan-veth up
+    pre-up ip link set em17 up
+    #Set bridge UP/DOWN
+    up ip link set $IFACE up
+    down ip link set $IFACE down
+    #delete veth pair on DOWN
+    post-down ip link del br-vxlan-veth || true
+    post-down ip link del br-storage-veth || true
+    post-down ip link del br-vlan-veth || true
+    #Set Bridge options
+    bridge_stp off
+    bridge_waitport 0
+    bridge_fd 0
+    bridge_ports eth0 br-vxlan-veth br-storage-veth br-vlan-veth
+    address ETH0IP
+    netmask ETH0NETMASK
+    # The gateway of sharednet on chameleon cloud
+    gateway ETH0GATEWAY
+    # Configure the management network as a sub-interface. 
+    # This network does not have a gateway
+    up ip addr add MGMTIP/24 dev $IFACE label $IFACE:0
+
+
+# Mandatory
+# Provides infrastructure for VXLAN tunnel/overlay networks.
+auto br-vxlan
+iface br-vxlan inet manual
+    address VXLAN_IP
+    netmask 255.255.255.0
+    bridge_stp off
+    bridge_waitport 0
+    bridge_fd 0
+    bridge_ports em15
+
+ Optional
+# Provides segregated access to block storage devices between 
+# Compute and Block Storage hosts.
+auto br-storage
+iface br-storage inet manual
+    address STORAGE_IP
+    netmask 255.255.255.0
+    bridge_stop off
+    bridge_waitport 0
+    bridge_fd 0
+    bridge_ports em16
+
+# Mandatory
+# Provides infrastructure for VLAN and flat networks.
+auto br-vlan
+iface br-vlan inet manual
+    bridge_stp off
+    bridge_waitport 0
+    bridge_fd 0
+    offload-sg off
+    bridge_ports em17
+
+# Add an additional address to br-vlan
+#iface br-vlan inet static
+    # Flat network default gateway
+    # -- This needs to exist somewhere for network reachability
+    # -- from the router namespace for floating IP paths.
+    # -- Putting this here is primarily for tempest to work.
+    #address 172.29.248.1
+    #netmask 255.255.255.0
