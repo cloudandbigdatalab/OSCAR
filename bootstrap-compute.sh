@@ -14,6 +14,8 @@ set -e -u -x
 # The variables for setting Netmask and Gateway 
 export ETH0_NETMASK="255.255.252.0"
 export ETH0_GATEWAY="$(ip r | grep default | awk '{print $3}')"
+PUBLIC_INTERFACE="eth0"
+
 
 # Input the management ip 
 export MANAGEMENT_IP=$1
@@ -29,6 +31,7 @@ else
   export PUBLIC_ADDRESS=${PUBLIC_ADDRESS:-$(ip -o -4 addr show dev ${PUBLIC_INTERFACE} | awk -F '[ /]+' '/global/ {print $4}')}
 fi
 
+echo PUBLIC_ADDRESS
 
 
 #export PUBLIC_INTERFACE=${PUBLIC_INTERFACE:-$(ip -o -4 addr show dev ${PUBLIC_INTERFACE} | awk -F '[ /]+' '/global/ {print $4}'p route show | awk '/default/ { print $NF }')}
@@ -190,7 +193,7 @@ sed -i "s/STORAGE_IP/$STORAGE_IP/g" /etc/network/interfaces.d/compute-interfaces
 cp -R interfaces.template /etc/network/interfaces
 
 # Bring up the new interfaces
-for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/controller-interfaces.cfg); do
+for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/compute-interfaces.cfg); do
     /sbin/ifup $i || true
 done
 
