@@ -112,9 +112,6 @@ iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
 
-# Install python modules
-pip install pycrypto
-
 # Ensure that sshd permits root login, or ansible won't be able to connect
 if grep "^PermitRootLogin" /etc/ssh/sshd_config > /dev/null; then
   sed -i 's/^PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -162,6 +159,9 @@ if [ ! "$(which pip)" ]; then
   curl ${GET_PIP_URL} > /opt/get-pip.py
   python2 /opt/get-pip.py || python /opt/get-pip.py
 fi
+
+# Install pip requirements
+pip install pycrypto
 
 # Make the system key used for bootstrapping self
 if [ ! -d /root/.ssh ];then

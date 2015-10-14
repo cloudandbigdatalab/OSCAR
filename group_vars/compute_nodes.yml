@@ -1,0 +1,3 @@
+compute1_mgmt_ip: 172.16.100.101
+compute2_mgmt_ip: 172.16.100.102
+compute3_mgmt_ip: 172.16.100.103
