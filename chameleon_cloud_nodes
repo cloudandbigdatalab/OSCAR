@@ -1,20 +1,26 @@
 [controller]
 
 [compute1]
+10.20.108.214
 
 [compute1:vars]
 compute_mgmt_ip="172.16.100.101"
+compute_vxlan_ip="172.16.101.101"
+compute_storage_ip="172.16.102.101"
 
 [compute2]
-10.20.0.23
 
 [compute2:vars]
 compute_mgmt_ip="172.16.100.102"
+compute_vxlan_ip="172.16.101.102"
+compute_storage_ip="172.16.102.102"
 
 [compute3]
 
 [compute3:vars]
 compute_mgmt_ip="172.16.100.103"
+compute_vxlan_ip="172.16.101.103"
+compute_storage_ip="172.16.102.103"
 
 [compute_nodes:children]
 compute1

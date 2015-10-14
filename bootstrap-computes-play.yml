@@ -1,0 +1,14 @@
+---
+- name: Bootstrap the compute nodes
+  hosts: compute_nodes
+  user: root
+  tasks:
+    - name: debug mgmt-ip for compute node
+      debug: var=compute_mgmt_ip
+#    - name: print out all host vars
+#      debug: var=hostvars[inventory_hostname]
+  roles:
+    - role: bootstrap-compute-role
+      tags:
+        - "bootstrap-compute"
+  

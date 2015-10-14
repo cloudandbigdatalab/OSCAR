@@ -170,28 +170,6 @@ fi
 #  echo "${key_content}" | tee -a ${key_path}/authorized_keys
 #fi
 
-# Copy aio network config into place.
-if [ ! -d "/etc/network/interfaces.d" ];then
-  mkdir -p /etc/network/interfaces.d/
-fi
-
-# Copy the basic aio network interfaces over
-cp -R compute-interfaces.cfg.template /etc/network/interfaces.d/compute-interfaces.cfg
-
-# Modify the file to match the IPs given by the user.
-sed -i "s/ETH0IP/$PUBLIC_ADDRESS/g" /etc/network/interfaces.d/compute-interfaces.cfg
-sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/network/interfaces.d/compute-interfaces.cfg
-sed -i "s/ETH0NETMASK/$ETH0_NETMASK/g" /etc/network/interfaces.d/compute-interfaces.cfg
-sed -i "s/ETH0GATEWAY/$ETH0_GATEWAY/g" /etc/network/interfaces.d/compute-interfaces.cfg
-sed -i "s/VXLAN_IP/$VXLAN_IP/g" /etc/network/interfaces.d/compute-interfaces.cfg
-sed -i "s/STORAGE_IP/$STORAGE_IP/g" /etc/network/interfaces.d/compute-interfaces.cfg
-
-
-
-
-
-cp -R interfaces.template /etc/network/interfaces
-
 # Bring up the new interfaces
 for i in $(awk '/^iface/ {print $2}' /etc/network/interfaces.d/compute-interfaces.cfg); do
     /sbin/ifup $i || true
