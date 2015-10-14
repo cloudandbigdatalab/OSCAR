@@ -10,6 +10,17 @@
 
 set -e -u -x
 
+
+# The variables for setting Netmask and Gateway 
+export ETH0_NETMASK="255.255.252.0"
+export ETH0_GATEWAY="$(ip r | grep default | awk '{print $3}')"
+
+# Input the management ip 
+export MANAGEMENT_IP=$1
+export VXLAN_IP=$2
+export STORAGE_IP=$3
+
+
 # If br-mgmt bridge is up already, use that for public address and interface.
 if grep "br-mgmt" /proc/net/dev > /dev/null;then
   export PUBLIC_INTERFACE="br-mgmt"
@@ -169,8 +180,17 @@ sed -i "s/ETH0IP/$PUBLIC_ADDRESS/g" /etc/network/interfaces.d/compute-interfaces
 sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/network/interfaces.d/compute-interfaces.cfg
 sed -i "s/ETH0NETMASK/$ETH0_NETMASK/g" /etc/network/interfaces.d/compute-interfaces.cfg
 sed -i "s/ETH0GATEWAY/$ETH0_GATEWAY/g" /etc/network/interfaces.d/compute-interfaces.cfg
+sed -i "s/VXLAN_IP/$VXLAN_IP/g" /etc/network/interfaces.d/compute-interfaces.cfg
+sed -i "s/STORAGE_IP/$STORAGE_IP/g" /etc/network/interfaces.d/compute-interfaces.cfg
+
+
+
+
 
 cp -R interfaces.template /etc/network/interfaces
+
+
+
 
 
 
