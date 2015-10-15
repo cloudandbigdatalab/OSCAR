@@ -200,6 +200,7 @@ fi
 #
 ## Modify the file to match the IPs given by the user.
 #sed -i "s/ETH0IP/$PUBLIC_ADDRESS/g" /etc/network/interfaces.d/controller-interfaces.cfg
+
 #sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/network/interfaces.d/controller-interfaces.cfg
 #sed -i "s/ETH0NETMASK/$ETH0_NETMASK/g" /etc/network/interfaces.d/controller-interfaces.cfg
 #sed -i "s/ETH0GATEWAY/$ETH0_GATEWAY/g" /etc/network/interfaces.d/controller-interfaces.cfg
@@ -231,6 +232,10 @@ sed -i "s/STORAGE_NETWORK/$STORAGE_NETWORK/g" /etc/openstack_deploy/openstack_us
 if [ ! -d "/etc/openstack_deploy/conf.d" ];then
   mkdir -p "/etc/openstack_deploy/conf.d"
 fi
+
+# Move the user_variables file from /opt/openstack-ansible/etc/openstack_deploy/ to /etc/openstack_deploy
+cp /opt/openstack-ansible/etc/openstack_deploy/user_variables.yml /etc/openstack_deploy/user_variables.yml
+cp /opt/openstack-ansible/etc/openstack_deploy/user_secrets.yml /etc/openstack_deploy/user_secrets.yml
 
 # Generate the passwords
 scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
@@ -285,6 +290,7 @@ sed -i "s/external_lb_vip_address:.*/external_lb_vip_address: ${PUBLIC_ADDRESS}/
 #echo "nova_virt_type: ${NOVA_VIRT_TYPE}" | tee -a /etc/openstack_deploy/user_variables.yml
 #
 #
+
 
 ## Set the running kernel as the required kernel
 echo "required_kernel: $(uname --kernel-release)" | tee -a /etc/openstack_deploy/user_variables.yml
