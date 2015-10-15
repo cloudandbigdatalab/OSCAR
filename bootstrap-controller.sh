@@ -19,7 +19,7 @@ then
 fi
 
 # For debugging only
-#set -e -u -x
+set -e -u -x
 
 #export ETH0_NETMASK="$(ifconfig eth0 | grep Mask | awk -F ':' '{print $4}')"
 export ETH0_NETMASK="255.255.252.0"
@@ -214,8 +214,8 @@ done
 
 # Instead of moving the AIO files in place, it will move our custom
 # configs in place.
-cp -R openstack_deploy/ /etc/openstack_deploy/
-cp openstack_deploy/openstack_user_config.yml.template /etc/openstack_deploy/openstack_user_config.yml
+cp -R /opt/OCI-OpenStack-Ansible/openstack_deploy /etc/openstack_deploy/
+cp /opt/OCI-OpenStack-Ansible/openstack_deploy/openstack_user_config.yml.template /etc/openstack_deploy/openstack_user_config.yml
 
 #Substitue the IPs in the openstack_user_config.yml with the user-defined IPs
 sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/openstack_deploy/openstack_user_config.yml
@@ -238,7 +238,7 @@ cp /opt/openstack-ansible/etc/openstack_deploy/user_variables.yml /etc/openstack
 cp /opt/openstack-ansible/etc/openstack_deploy/user_secrets.yml /etc/openstack_deploy/user_secrets.yml
 
 # Generate the passwords
-scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+/opt/OCI-OpenStack-Ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
 
 #change the generated passwords for the OpenStack (admin)
 sed -i "s/keystone_auth_admin_password:.*/keystone_auth_admin_password: ${ADMIN_PASSWORD}/" /etc/openstack_deploy/user_secrets.yml
