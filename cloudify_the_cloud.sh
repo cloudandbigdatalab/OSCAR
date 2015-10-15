@@ -6,11 +6,8 @@
 pushd /opt/OCI-OpenStack-Ansible
   ./scripts/bootstrap-ansible.sh
 
-# Copy over keys
-echo "Have you copied over the keys from the controller to the compute node?"
-exit
 # Run bootstrap playbooks
-  ansible-playbook bootstrap-openstack-plays.yml
+  ansible-playbook bootstrap-openstack-play.yml
 popd
 
 # Run openstack-ansible playbooks
