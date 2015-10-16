@@ -6,6 +6,8 @@
 3. Install Ansible
 4. Deploy OpenStack using OCI OpenStack Ansible
 
+![Architecture](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide3.jpg "Architecture" )
+
 OCI OpenStack Ansible project uses RPC for installation of OpenStack. Addition to RPC this project consists of scripts that prepare the hosts for the installation. This is a quick start guide for using this project.This guide helps the user to deploy OpenStack on 4 nodes, 1 controller node and 3 compute nodes.  
 
 ## Provising the Bare-Metal instances on Chameleon Cloud.
@@ -94,6 +96,7 @@ cd scripts
 ```
 
 ### Configuring the hosts for deployment using openstack-ansible
+![Architecture](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide1.jpg "Architecture" )
 The project comes with an set of ansible playbooks which can prep the controller and compute hosts environment for Openstack deployment using openstack-ansible. These playbooks also edit some configuration files from the original openstack-ansible project to make those scripts compatible with the environment created. Go ahead an run the following command from /opt/OCI-OpenStack-Ansible to start configuring the controller and compute hosts.
 ```
 cd ..
