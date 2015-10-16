@@ -5,6 +5,7 @@
 3. Clone the repo and edit the inventory file
 3. Install Ansible
 4. Deploy OpenStack using OCI OpenStack Ansible
+5. Accessing Horizon dashboard and adding image
 
 ![Architecture](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide3.jpg "Architecture" )
 
@@ -105,10 +106,17 @@ ansible-playbook bootstrap-openstack-play.yml
 The above command should have created clone openstack-ansible repo in /opt directory and changed some configuration files to suit the environment created.
 
 ### Deploying openstack using openstack-ansible 
+Once the network configuration of the controller and compute hosts is properly done, deploying openstack using openstack-ansible is very simple. Follow the commands below.
 
 ```
-
+cd ../openstack-ansible/playbooks
+openstack-ansible setup-hosts.yml
+openstack-ansible haproxy-install.yml
+openstack-ansible setup-infrastructure.yml 
+openstack-ansible setup-openstack.yml 
 ```
+### Accessing Horizon dashboard and adding image
+If the openstack installation is successful the horizon dashboard should be available online. Acces the dashboard by using web browser and the url ```http://<controller Ip>```
 
 
 
