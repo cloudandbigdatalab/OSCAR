@@ -9,6 +9,7 @@ compute3_mgmt_ip="172.16.100.103"
 container_network="172.16.100.0/24"
 tunnel_network="172.16.101.0/24"
 storage_network="172.16.102.0/24"
+vm_gateway="172.29.248.1"
 
 [compute1]
 10.20.108.23
