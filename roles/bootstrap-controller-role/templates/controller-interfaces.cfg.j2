@@ -89,5 +89,5 @@ iface br-vlan inet static
     # -- This needs to exist somewhere for network reachability
     # -- from the router namespace for floating IP paths.
     # -- Putting this here is primarily for tempest to work.
-    address 172.29.248.1
+    address {{ vm_gateway }}
     netmask 255.255.255.0
