@@ -8,3 +8,6 @@
 
 #### Configuring the Ansible inventory file
 
+#### Preparing the environment for OpenStack deployment
+
+
