@@ -2,6 +2,14 @@
 
 ### OpenStack deployment using OpenStack-Ansible project scripts.
 
+Once the network configuration of the controller and compute hosts is properly done, deploying openstack using openstack-ansible is very simple. Follow the commands below.
+
+```
+cd ../openstack-ansible/playbooks
+openstack-ansible setup-hosts.yml
+openstack-ansible haproxy-install.yml
+openstack-ansible setup-infrastructure.yml 
+```
 
 #### Keystone installation
 
