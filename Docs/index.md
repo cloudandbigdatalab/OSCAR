@@ -10,15 +10,27 @@ OpenStack setup in multi node configuation is non trivial and requires proper co
 
 The OCI-OpenStack-Ansible project is designed to simlify the configuration of resources and OpenStack installation process. This project has scripts to configre the computing resources and prepare them for OpenStack deployment using OpenStack-Ansible, an official OpenStack project. This package also pulls stable version of the OpenStack-Ansible from github and edits the configuration files to match the configured environment.
 
-## Step by step installation
+## Overview
 
-- Server setup and requirements
+This guide walks through the process of deployment of OpenStack on 5 nodes cluster (1 Controller node and 4 Compute nodes). The Controller and Compute nodes will have different components installed in them as shown in figure. The deployment process is 4 fold as mentioned below. 
+
+- Servers setup 
+- Pre deployment 
+- OpenStack deployment 
+- Post deployment 
+
+![Architecture](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide4.jpg "Architecture" )
+
+
+
+
+
+
+
+- Servers setup and requirements
 - Pre deployment instructions
 - OpenStack deployment 
 - Post deployment instructions
-
-
-
 
 
 
