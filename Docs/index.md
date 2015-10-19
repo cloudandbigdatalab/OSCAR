@@ -16,7 +16,7 @@ This guide is a walks through on deployment of OpenStack on 5 nodes cluster (1 C
 
 ***Controller node:*** As the name suggests, this node controls the OpenStack cluster. This contains all the important components for proper functioning of the OpenStack cluster. Components like identity service, image service, networking and compute are installed in this node.
 
-***Compute node:*** The virtual machines are hosted in these nodes. The computes service, hypervisor and network agent are installed in this node. 
+***Compute node:*** The virtual machines are hosted in these nodes. The compute service, hypervisor and network agent are installed in this node. 
 
 ![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide4.jpg "Components of cluster" )
 
