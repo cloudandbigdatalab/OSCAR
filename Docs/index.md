@@ -33,14 +33,14 @@ The deployment process is 4 fold as mentioned below.
 
 
 
-
+<!--
 
 - Servers setup and requirements
 - Pre deployment instructions
 - OpenStack deployment 
 - Post deployment instructions
 
-
+-->
 
 
 
