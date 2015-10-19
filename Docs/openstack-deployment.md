@@ -13,6 +13,8 @@ openstack-ansible setup-infrastructure.yml
 
 #### Keystone installation
 
+``` os-keystone-install.yml```
+
 #### Glance installation
 
 ``` os-glance-install.yml ```
