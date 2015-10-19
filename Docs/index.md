@@ -1,6 +1,6 @@
 # Openstack Ansible installation guide
 
-## Introduction
+### Introduction
 
 OpenStack is the open source software for creating public and private clouds. OpenStack software controls large pools of compute, storage, and networking resources throughout a datacenter, managed through a dashboard or via the OpenStack API. OpenStack works with popular enterprise and open source technologies making it ideal for heterogeneous infrastructure \[[1]\].
 
@@ -10,13 +10,13 @@ OpenStack setup in multi node configuation is non trivial and requires proper co
 
 The OCI-OpenStack-Ansible project is designed to simlify the configuration of resources and OpenStack installation process. This project has scripts to configre the computing resources and prepare them for OpenStack deployment using OpenStack-Ansible, an official OpenStack project. This package also pulls stable version of the OpenStack-Ansible from github and edits the configuration files to match the configured environment.
 
-## Overview
+### Overview
 
 This guide walks through the process of deployment of OpenStack on 5 nodes cluster (1 Controller node and 4 Compute nodes). The Controller and Compute nodes will have different components installed in them as shown in figure. 
 
-***Controller node***: As the name suggests, this node controls the OpenStack cluster. This contains all the important components for proper functioning of the OpenStack cluster. Important components like identity service, image service, networking and compute are installed in this node.
+***Controller node:*** As the name suggests, this node controls the OpenStack cluster. This contains all the important components for proper functioning of the OpenStack cluster. Components like identity service, image service, networking and compute are installed in this node.
 
-***Compute node***: The virtual machines are hosted in these nodes. The computes service, hypervisor and network agent are installed in this node. 
+***Compute node:*** The virtual machines are hosted in these nodes. The computes service, hypervisor and network agent are installed in this node. 
 
 ![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide4.jpg "Components of cluster" )
 
