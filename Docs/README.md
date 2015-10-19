@@ -9,7 +9,7 @@
 
 ![Architecture](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide3.jpg "Architecture" )
 
-OCI OpenStack Ansible project uses RPC for installation of OpenStack. Addition to RPC this project consists of scripts that prepare the hosts for the installation. This is a quick start guide for using this project.This guide helps the user to deploy OpenStack on 4 nodes, 1 controller node and 3 compute nodes.  
+OCI OpenStack Ansible project uses Openstack Ansible Deployment(OSD) for the installation of OpenStack. In addition to OSD, this project consists of scripts that prepare the hosts for the installation. This is a quick start guide for using this project.This guide helps the user to deploy OpenStack on 4 nodes, 1 controller node and 3 compute nodes.  
 
 ## Provising the Bare-Metal instances on Chameleon Cloud.
 
