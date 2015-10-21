@@ -10,7 +10,9 @@ Make sure that you are a root user
 
 Copy it to the Centos machine and run the script
 
-``` source <filename>.sh ```
+``` 
+source <filename>.sh
+```
 
 This adds all the necessary credentials as environment variables.
 
