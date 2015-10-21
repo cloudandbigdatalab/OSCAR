@@ -1,6 +1,6 @@
-1. Add the neutron stuff into the document
-2. Add the instructions for using horizon dashboard
+1. Add the neutron stuff into the document - Done
+2. Add the instructions for using horizon dashboard 
 3. Add instructions for adding an image to bare metal
 4. Add instructions for adding an image for vm's
-5. Creating a network, router and adding an interface to the router
-6. Final ssh instructions from the controller
+5. Creating a network, router and adding an interface to the router 
+6. Final ssh instructions from the controller 
