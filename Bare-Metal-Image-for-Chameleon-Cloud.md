@@ -10,48 +10,67 @@ Make sure that you are a root user
 
 Copy it to the Centos machine and run the script
 
-source <filename>.sh
+``` source <filename>.sh ```
 
 This adds all the necessary credentials as environment variables.
 
 
 ## Install the neccessary packages
 
-yum install git libguestfs-tools-c
+``` 
+yum install git libguestfs-tools-c 
+```
 
-git clone https://github.com/openstack/diskimage-builder.git
+``` 
+git clone https://github.com/openstack/diskimage-builder.git 
+```
 
 ## Download the image from Ubuntu or Centos website (qcow2 format)
 
+```
 Ubuntu 14.04.03 image
-  wget http://uec-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
+wget http://uec-images.ubuntu.com/releases/14.04/release/ubuntu-14.04-server-cloudimg-amd64-disk1.img
 
 Centos7 image
   wget http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-20141129_01.qcow2c
-  
+```  
 ## Follow these steps for creating the image
 
-  export DIB_LOCAL_IMAGE=~/<Downloaded image path>
+``` 
+export DIB_LOCAL_IMAGE=~/<Downloaded-image-path> 
+```
   
 <image type> implies ubuntu or centos7  
 
-  diskimage-builder/bin/disk-image-create <image type> baremetal -o <Custom name>
+``` 
+diskimage-builder/bin/disk-image-create <image type> baremetal -o <Custom name>
+```
   
 for example to create a ubuntu image
 
-  diskimage-builder/bin/disk-image-create ubuntu baremetal -o Ubuntu_14_04
+``` 
+diskimage-builder/bin/disk-image-create ubuntu baremetal -o Ubuntu_14_04
+```
 
-  glance image-create --name <Custom name>-kernel --is-public False --progress --disk-format aki < <Custom name>.vmlinuz  
+``` 
+glance image-create --name <Custom name>-kernel --is-public False --progress --disk-format aki < <Custom name>.vmlinuz
+```  
   
 After this command a catalog is displayed and copy the id from the catalog and export it to VMLINUZ_UUID 
 
-  export VMLINUZ_UUID=<Id from catalog>
-  
+```
+export VMLINUZ_UUID=<Id from catalog>
+```
+
+```
   glance image-create --name <Custom name>-initrd --is-public False --progress --disk-format ari < <Custom name>.initrd
+```
 
 After this command a catalog is displayed and copy the id from the catalog and export it to INITRD_UUID
 
-  export INITRD_UUID=<Id from catalog>  
-
+```
+export INITRD_UUID=<Id from catalog>  
+```
+```
   glance image-create --name CC-CentOS7 --is-public True --disk-format qcow2 --container-format bare --property kernel_id=$VMLINUZ_UUID --property ramdisk_id=$INITRD_UUID < CC-CentOS7.qcow2  
-
+```
