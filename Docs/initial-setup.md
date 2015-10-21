@@ -12,7 +12,7 @@ We strongly recommand using Ubuntu 14.04 as operating system for the servers. Op
 
 OCI-OpenStack-Ansible and Openstack-ansible projects run based on ansible. For using ansible with the cluster the controller node has to have access to all the nodes along with itself. The access to the controller nodes can be granted using key pairs. Once the servers are up and running, create a key pair on controller node add the public key to authorized_keys of all the compute nodes and also controller node itself. Here are the set of instructions to do that.
 
-Creating a key pair on controller node. Make sure that you are logged in as root user while performing these steps.
+Create a key pair on controller node. Make sure that you are logged in as root user while performing these steps.
 
 ```
  ssh-keygen -f .ssh/id_rsa -N ""  
