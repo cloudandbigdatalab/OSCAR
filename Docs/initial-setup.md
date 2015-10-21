@@ -24,5 +24,5 @@ This command should have created two files ``` id_rsa ``` and ``` id_rsa.pub ```
 ssh-copy-id root@<host ip>
 ```
 
-Where host-ip should be replaced by ip address of all the servers including controller node itself. But in case of Chameleon cloud password authentication is disabled by default. So it is better to add it manually by appending the contents of ``` id_rsa.pub``` into the ``` .ssh/authorized_keys ``` on all the nodes along with the controller node. Check if all the nodes can be accessed using the ``` ssh root@<node-ip> ``` command. Once controller node has access to all the nodes, the setup is ready for pre deployment procedures.
+Where host-ip should be replaced by ip address of all the servers including controller node itself. But in case of Chameleon cloud password authentication is disabled by default. So it is better to add it manually by appending the contents of ``` id_rsa.pub``` into the ``` .ssh/authorized_keys ``` on all the nodes along with the controller node. Check if all the nodes can be accessed using ``` ssh root@<node-ip> ``` command. Once controller node has access to all the nodes, the setup is ready for pre deployment procedures.
 
