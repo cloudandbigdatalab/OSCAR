@@ -12,6 +12,8 @@ The OCI-OpenStack-Ansible project is designed to simlify the configuration of re
 
 ### Overview
 
+![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide6.jpg "Components of cluster" )
+
 This guide is a walks through on deployment of OpenStack on 5 nodes cluster (1 Controller node and 4 Compute nodes). The Controller and Compute nodes will have different components installed in them as shown in figure. 
 
 ***Controller node:*** As the name suggests, this node controls the OpenStack cluster. This contains all the important components for proper functioning of the OpenStack cluster. Components like identity service, image service, networking and compute are installed in this node.
