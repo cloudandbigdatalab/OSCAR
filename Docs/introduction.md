@@ -1,4 +1,4 @@
-# Openstack Ansible installation guide
+# OpenStack Configurator for Academic Research (OSCAR)
 
 ### Introduction
 
