@@ -83,7 +83,7 @@ Add the ip address of controller and compute hosts at appropriate section as sho
 #### Preparing the environment for OpenStack deployment
 
 ![Architecture](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide1.jpg "Architecture" )
-The project comes with an set of ansible playbooks which can prep the controller and compute hosts environment for Openstack deployment using openstack-ansible. These playbooks also edit some configuration files from the original openstack-ansible project to make those scripts compatible with the environment created. Go ahead an run the following command from /opt/OCI-OpenStack-Ansible to start configuring the controller and compute hosts.
+The project comes with an set of ansible playbooks which can prep the controller and compute hosts environment for Openstack deployment using openstack-ansible. These playbooks also edit some configuration files from the original openstack-ansible project to make those scripts compatible with the environment created. Go ahead an run the following command from /opt/OSCAR to start configuring the controller and compute hosts.
 ```
 cd ..
 ansible-playbook bootstrap-openstack-play.yml
