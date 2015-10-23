@@ -15,7 +15,7 @@ cd /opt
 Clone the github repo of OCI-OpenStack-Ansible and enter the OCI-OpenStack-Ansible directory
 
 ```
-git clone https://github.com/UTSA-OCI/OCI-OpenStack-Ansible.git
+git clone https://github.com/cloudandbigdatalab/OSCAR.git
 
 cd OCI-OpenStack-Ansible
 ```
