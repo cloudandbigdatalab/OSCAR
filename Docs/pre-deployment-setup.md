@@ -17,7 +17,7 @@ Clone the github repo of OCI-OpenStack-Ansible and enter the OCI-OpenStack-Ansib
 ```
 git clone https://github.com/cloudandbigdatalab/OSCAR.git
 
-cd OCI-OpenStack-Ansible
+cd OSCAR
 ```
 
 #### Installing Ansible 
@@ -25,7 +25,7 @@ cd OCI-OpenStack-Ansible
 Ansible is required to deploy OpenStack using OCI-OpenStack-Ansible project. There is a bootstrap script available in /opt/OCI-OpenStack-Ansible/scripts directory which sets the ansible up for the user.
 ```
 cd scripts
-./bootstrap_ansible.sh
+./bootstrap-ansible.sh
 ```
 
 #### Configuring the Ansible inventory file
