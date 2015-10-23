@@ -8,7 +8,7 @@ OpenStack has a modular architecture with various code names for its components.
 
 OpenStack setup in multi node configuation is non trivial and requires proper configuration of computing resources. In academia provisioning these resources is arduous. Due to this complex nature of OpenStack installtion academic research in this field has not advanced. 
 
-The OCI-OpenStack-Ansible project is designed to simlify the configuration of resources and OpenStack installation process. This project has scripts to configre the computing resources and prepare them for OpenStack deployment using OpenStack-Ansible, an official OpenStack project. This package also pulls stable version of the OpenStack-Ansible from github and edits the configuration files to match the configured environment.
+The OSCAR project is designed to simlify the configuration of resources and OpenStack installation process. This project has scripts to configre the computing resources and prepare them for OpenStack deployment using OpenStack-Ansible, an official OpenStack project. This package also pulls stable version of the OpenStack-Ansible from github and edits the configuration files to match the configured environment.
 
 ### Overview
 
