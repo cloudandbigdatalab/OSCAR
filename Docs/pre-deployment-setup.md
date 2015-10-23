@@ -26,6 +26,7 @@ Ansible is required to deploy OpenStack using OCI-OpenStack-Ansible project. The
 ```
 cd scripts
 ./bootstrap-ansible.sh
+cd ..
 ```
 
 #### Configuring the Ansible inventory file
