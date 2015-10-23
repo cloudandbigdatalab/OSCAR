@@ -3,7 +3,7 @@
 # using the openstack-ansible project.
 
 # Install ansible
-pushd /opt/OCI-OpenStack-Ansible
+pushd /opt/OSCAR
   ./scripts/bootstrap-ansible.sh
 
 # Run bootstrap playbooks
