@@ -12,9 +12,9 @@
 # Usage:
 # ./bootstrap-controller.sh <mgmt-ip>
 
-if [ $# -lt 7 ]
+if [ $# -lt 4 ]
 then
-	echo "./bootstrap-controller.sh <mgmt-ip-controller> <mgmt-ip-compute1> <mgmt-ip-compute2> <mgmt-ip-compute3> <container-net> <tunnel-net> <storage-net>"
+	echo "./bootstrap-controller.sh <mgmt-ip-controller> <container-net> <tunnel-net> <storage-net>"
 	exit
 fi
 
@@ -26,9 +26,9 @@ export ETH0_NETMASK="255.255.252.0"
 export ETH0_GATEWAY="$(ip r | grep default | awk '{print $3}')"
 
 export MANAGEMENT_IP=$1
-export MANAGEMENT_IP_COMPUTE1=$2
-export MANAGEMENT_IP_COMPUTE2=$3
-export MANAGEMENT_IP_COMPUTE3=$4
+#export MANAGEMENT_IP_COMPUTE1=$2
+#export MANAGEMENT_IP_COMPUTE2=$3
+#export MANAGEMENT_IP_COMPUTE3=$4
 CONTAINER_NETWORK=$5
 export CONTAINER_NETWORK=$(echo $CONTAINER_NETWORK | sed 's/\//\\\//g')
 TUNNEL_NETWORK=$6
@@ -219,9 +219,19 @@ cp /opt/OSCAR/openstack_deploy/openstack_user_config.yml.template /etc/openstack
 
 #Substitue the IPs in the openstack_user_config.yml with the user-defined IPs
 sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/openstack_deploy/openstack_user_config.yml
-sed -i "s/COMPUTE1IP/$MANAGEMENT_IP_COMPUTE1/g" /etc/openstack_deploy/openstack_user_config.yml
-sed -i "s/COMPUTE2IP/$MANAGEMENT_IP_COMPUTE2/g" /etc/openstack_deploy/openstack_user_config.yml
-sed -i "s/COMPUTE3IP/$MANAGEMENT_IP_COMPUTE3/g" /etc/openstack_deploy/openstack_user_config.yml
+
+#Adding compute nodes and their management ip's from management_ips file in openstack_user_config.yml
+# ***** Needs some testing 
+compute_count=1
+while IFS='' read -r line || [[ -n "$line" ]]; do
+   sed -i 's/.*compute_hosts:.*/&\n   compute'$compute_count':/' /etc/openstack_deploy/openstack_user_config.yml
+   sed -i 's/.*compute'$compute_count':.*/&\n      ip: '$line'/' /etc/openstack_deploy/openstack_user_config.yml
+   compute_count=$(($compute_count + 1))
+done < "/opt/OSCAR/management_ips"
+
+#sed -i "s/COMPUTE1IP/$MANAGEMENT_IP_COMPUTE1/g" /etc/openstack_deploy/openstack_user_config.yml
+#sed -i "s/COMPUTE2IP/$MANAGEMENT_IP_COMPUTE2/g" /etc/openstack_deploy/openstack_user_config.yml
+#sed -i "s/COMPUTE3IP/$MANAGEMENT_IP_COMPUTE3/g" /etc/openstack_deploy/openstack_user_config.yml
 
 # Populate the cidr_networks in the /etc/openstack_deploy/openstack_user_config.yml
 sed -i "s/CONTAINER_NETWORK/$CONTAINER_NETWORK/g" /etc/openstack_deploy/openstack_user_config.yml
