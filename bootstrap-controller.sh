@@ -234,11 +234,10 @@ sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf
 management_ip=$MANAGEMENT_IP
 management_ip_base=$(echo $management_ip | cut -d"." -f1-3)
 #echo $management_ip_base
-for ((i=2; i<=computes_count+1; i++)); do
+for ((i=1; i<=computes_count; i++)); do
    line=$management_ip_base"."$(( 100 + $i ))
-   compute_count=$(($i - 1))
-   sed -i 's/.*compute_hosts:.*/&\n   compute'$compute_count':/' /etc/openstack_deploy/openstack_user_config.yml
-   sed -i 's/.*compute'$compute_count':.*/&\n      ip: '$line'/' /etc/openstack_deploy/openstack_user_config.yml
+   sed -i 's/.*compute_hosts:.*/&\n   compute'$i':/' /etc/openstack_deploy/openstack_user_config.yml
+   sed -i 's/.*compute'$i':.*/&\n      ip: '$line'/' /etc/openstack_deploy/openstack_user_config.yml
    #echo $management_ip_base"."$(( 100 + $i ))
 done
 
