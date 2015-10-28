@@ -231,7 +231,7 @@ computes_count=$(sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.con
 
 sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf
 
-management_ip=MANAGEMENT_IP
+management_ip=$MANAGEMENT_IP
 management_ip_base=$(echo $management_ip | cut -d"." -f1-3)
 #echo $management_ip_base
 for ((i=2; i<=computes_count+1; i++)); do
