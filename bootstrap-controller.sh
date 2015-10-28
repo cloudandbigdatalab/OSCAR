@@ -222,13 +222,35 @@ sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/openstack_deploy/openstack_user_config.y
 
 #Adding compute nodes and their management ip's from management_ips file in openstack_user_config.yml
 # ***** Needs some testing 
-compute_count=1
-while IFS='' read -r line || [[ -n "$line" ]]; do
+
+break_var=$(sed '1,/computes:/d;/- /d' /etc/oscar/oscar.conf | sed '1,/computes:/d;/- /d' /etc/oscar/oscar.conf | sed '1!d')
+
+computes_count=$(sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf | wc -l)
+
+#echo $computes_count
+
+sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf
+
+management_ip=MANAGEMENT_IP
+management_ip_base=$(echo $management_ip | cut -d"." -f1-3)
+#echo $management_ip_base
+for ((i=2; i<=computes_count+1; i++)); do
+   line=$management_ip_base"."$(( 100 + $i ))
+   compute_count=$(($i - 1))
    sed -i 's/.*compute_hosts:.*/&\n   compute'$compute_count':/' /etc/openstack_deploy/openstack_user_config.yml
    sed -i 's/.*compute'$compute_count':.*/&\n      ip: '$line'/' /etc/openstack_deploy/openstack_user_config.yml
-   compute_count=$(($compute_count + 1))
-done < "/opt/OSCAR/management_ips"
+   #echo $management_ip_base"."$(( 100 + $i ))
+done
 
+
+
+
+#compute_count=1
+#while IFS='' read -r line || [[ -n "$line" ]]; do
+#   sed -i 's/.*compute_hosts:.*/&\n   compute'$compute_count':/' /etc/openstack_deploy/openstack_user_config.yml
+#   sed -i 's/.*compute'$compute_count':.*/&\n      ip: '$line'/' /etc/openstack_deploy/openstack_user_config.yml
+#   compute_count=$(($compute_count + 1))
+#done < "/opt/OSCAR/management_ips"
 #sed -i "s/COMPUTE1IP/$MANAGEMENT_IP_COMPUTE1/g" /etc/openstack_deploy/openstack_user_config.yml
 #sed -i "s/COMPUTE2IP/$MANAGEMENT_IP_COMPUTE2/g" /etc/openstack_deploy/openstack_user_config.yml
 #sed -i "s/COMPUTE3IP/$MANAGEMENT_IP_COMPUTE3/g" /etc/openstack_deploy/openstack_user_config.yml
