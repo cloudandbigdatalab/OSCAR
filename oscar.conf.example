@@ -2,7 +2,7 @@ network:
   container_network: 172.16.100.0/24
   tunnel_network: 172.16.101.0/24
   storage_network: 172.16.102.0/24
-  neutron_physical_provider_gateway: 172.16.248.1
+  vm_gateway: 172.16.248.1
 
 
 nodes:

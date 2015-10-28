@@ -4,7 +4,6 @@
 # Miguel Alex Cantu (miguel.cantu@rackspace.com)
 
 import json
-import netaddr
 import os
 import yaml
 
@@ -41,7 +40,7 @@ def main():
 			dynamic_inventory['_meta']['hostvars']['controller'][host_name + '_mgmt_ip'] = variables['compute_mgmt_ip'] 
 			dynamic_inventory['compute_nodes']['hosts'].append(host_name)
 		elif 'controller' in host_name:
-			dynamic_inventory[host_name] = { "hosts": ['controller'] }
+			dynamic_inventory[host_name] = { "hosts": ["controller"] }
 
 	print json.dumps(dynamic_inventory, indent=4, sort_keys=True)
 
@@ -52,7 +51,7 @@ def _build_compute_dict(compute_ip, network_dict):
 	"""
 	global starting_ip_for_bridges
 	compute_dict = {}
-	compute_dict["ansible_ssh_ip"] = compute_ip
+	compute_dict["ansible_ssh_host"] = compute_ip
 
 	ip_allocations = _assign_ip_to_bridges_from_network(network_dict)
 
@@ -73,7 +72,7 @@ def _build_controller_dict(conf_dict):
 	"""
 	global starting_ip_for_bridges
 	controller_dict = conf_dict['network']	
-	controller_dict["ansible_ssh_ip"] = conf_dict["nodes"]["controller"]
+	controller_dict["ansible_ssh_host"] = conf_dict["nodes"]["controller"]
 	ip_allocations = _assign_ip_to_bridges_from_network(conf_dict['network'])
 	controller_dict['controller_mgmt_ip'] = ip_allocations['mgmt_ip']
 	starting_ip_for_bridges += 1
@@ -86,7 +85,7 @@ def _assign_ip_to_bridges_from_network(network_dict):
 	allocations = {}
 	for network_type, network in network_dict.iteritems():
 		# ignore gateway
-		if network_type == 'neutron_physical_provider_gateway':
+		if network_type == 'vm_gateway':
 			continue
 		network_octet_list = network.split('.')
 		network_octet_list[-1] = str(starting_ip_for_bridges)

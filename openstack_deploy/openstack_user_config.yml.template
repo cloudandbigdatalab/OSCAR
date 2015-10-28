@@ -89,12 +89,6 @@ identity_hosts:
     ip: MGMTIP
 
 compute_hosts:
-  compute1:
-    ip: COMPUTE1IP
-  compute2:
-    ip: COMPUTE2IP
-  compute3:
-    ip: COMPUTE3IP
 
 storage_hosts:
   aio1:
