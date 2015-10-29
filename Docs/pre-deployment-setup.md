@@ -27,7 +27,7 @@ Create ```/etc/oscar``` folder and copy ```oscar.conf.example``` to this folder 
 ```
 mkdir /etc/oscar
 
-cp oscar.conf.example /etc/oscar/oscar.conf
+cp /opt/OSCAR/oscar.conf.example /etc/oscar/oscar.conf
 ```
 
 In this directory there is an config which should have the information of all the hosts. Open oscar.conf file with your favorite editor
