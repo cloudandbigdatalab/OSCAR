@@ -1,4 +1,4 @@
-# OCI-OpenStack-Ansible
+# OSCAR
 
 ## Overview
 Work in progress
