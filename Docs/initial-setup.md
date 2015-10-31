@@ -2,15 +2,15 @@
 
 #### System requirements
 
-We strongly recommand using Ubuntu 14.04 as operating system for the servers. Openstack deployment using this project is developed and tested for usage with Ubuntu 14.04.   
+We strongly recommend using Ubuntu 14.04 as operating system for the servers. Openstack deployment using this project is developed and tested for usage with Ubuntu 14.04.   
 
 #### Provisioning a bare metal server using chameleon cloud 
  
- Chameleon cloud users may have to add an Ubuntu 14.04 image before they spin the servers. This process can be found here <Link for adding new bare metal image>. For additional informtion on usage of chameleon cloud please visit www.chameleoncloud.org.
+ Chameleon cloud users may have to add an Ubuntu 14.04 image before they spin the servers. This process can be found here <Link for adding a new bare metal image>. For additional informtion on usage of chameleon cloud please visit www.chameleoncloud.org.
  
 #### Key pair authentication
 
-OCI-OpenStack-Ansible and Openstack-ansible projects run based on ansible. For using ansible with the cluster the controller node has to have access to all the nodes along with itself. The access to the controller nodes can be granted using key pairs. Once the servers are up and running, create a key pair on controller node add the public key to authorized_keys of all the compute nodes and also controller node itself. Here are the set of instructions to do that.
+OCI-OpenStack-Ansible and OpenStack-ansible projects run based on ansible. For using ansible with the cluster the controller node has to have access to all the nodes along with itself. The access to the controller nodes can be granted using key pairs. Once the servers are up and running, create a key pair on controller node add the public key to authorized_keys of all the compute nodes and also controller node itself. Here are the set of instructions to do that.
 
 Create a key pair on controller node. Make sure that you are logged in as root user while performing these steps.
 
