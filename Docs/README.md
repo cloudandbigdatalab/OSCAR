@@ -1,7 +1,7 @@
 # OCI OpenStack Ansible Guide
 
 1. Provisioning the Bare-Metal instances on Chameleon cloud 
-2. Create key-pair and add it the public key to all the nodes
+2. Create key-pair and add it the public-key to all the nodes
 3. Clone the repository and edit the inventory file
 3. Install Ansible
 4. Deploy OpenStack using OCI OpenStack Ansible
@@ -13,7 +13,7 @@ OCI OpenStack Ansible project uses Openstack Ansible Deployment(OSD) for the ins
 
 ## Provisioning the Bare-Metal instances on Chameleon Cloud.
 
-For provisioning the instances on bare metal cloud follow the guide from https://www.chameleoncloud.org/docs/bare-metal/ 
+For provisioning the instances on Bare-Metal cloud follow the guide from https://www.chameleoncloud.org/docs/bare-metal/ 
 
 ### Create a key-pair and add public key to all the nodes
 Make sure that you are a root user and create a key-pair on the controller node. We use this key-pair to grant the controller access to compute nodes and itself. 
