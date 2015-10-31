@@ -18,7 +18,8 @@ The OSCAR project is designed to simplify the configuration of resources and Ope
 
 ### Overview
 
-![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide6.jpg "Components of cluster" )
+<!--![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide6.jpg "Components of cluster" )-->
+<img src="https://github.com/cloudandbigdatalab/OSCAR/blob/gh-pages/assets/figures/Slide6.jpg?raw=True" width="100%">
 
 This guide gives a walk through OpenStack deployment on 5 nodes cluster (1 Controller node and 4 Compute nodes). The Controller and Compute nodes will have different components installed in them as shown in figure. 
 
@@ -26,7 +27,8 @@ This guide gives a walk through OpenStack deployment on 5 nodes cluster (1 Contr
 
 ***Compute node:*** The virtual machines are hosted in these nodes. The compute service, hypervisor and network agents are installed in this node. 
 
-![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide4.jpg "Components of cluster" )
+<!--![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide4.jpg "Components of cluster" )-->
+<img src="https://github.com/cloudandbigdatalab/OSCAR/blob/gh-pages/assets/figures/Slide4.jpg?raw=True" width="100%">
 
 The deployment process is 4 fold as mentioned below. 
 
