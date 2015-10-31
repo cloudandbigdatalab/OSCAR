@@ -1,13 +1,13 @@
-# OCI OpenStack Ansible Guide
+# OpenStack Configurator for Academic Research (OSCAR) Guide
 
 1. Provisioning the Bare-Metal instances on Chameleon cloud 
 2. Create key-pair and add it the public-key to all the nodes
 3. Clone the repository and edit the inventory file
 3. Install Ansible
-4. Deploy OpenStack using OCI OpenStack Ansible
+4. Deploy OpenStack using OSCAR project
 5. Accessing Horizon dashboard and adding image
 
-![Architecture](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide3.jpg "Architecture" )
+![Architecture](https://github.com/cloudandbigdatalab/OSCAR/blob/master/Docs/Figures/Slide3.jpg "Architecture" )
 
 OCI OpenStack Ansible project uses Openstack Ansible Deployment(OSD) for the installation of OpenStack. In addition to OSD, this project consists of scripts that prepare the hosts for the installation. This is a quick start guide for using this project.This guide helps the user to deploy OpenStack on 4 nodes, 1 controller node and 3 compute nodes.  
 
