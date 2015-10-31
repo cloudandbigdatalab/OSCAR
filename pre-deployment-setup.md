@@ -62,6 +62,7 @@ Add the ip address of controller and compute hosts at appropriate section as sho
 #### Installing Ansible 
 
 Ansible is required to deploy OpenStack using OSCAR project. There is a bootstrap script available in /opt/OSCAR/scripts directory which sets the ansible up for the user.
+
 ```
 cd /opt/OSCAR/scripts
 ./bootstrap-ansible.sh
@@ -74,10 +75,12 @@ cd /opt/OSCAR/scripts
 <img src="https://github.com/cloudandbigdatalab/OSCAR/blob/gh-pages/assets/figures/Slide7.jpg?raw=True" width="100%">
 
 The project comes with an set of ansible playbooks which can prep the controller and compute hosts environment for Openstack deployment using openstack-ansible. These playbooks also edit some configuration files from the original openstack-ansible project to make those scripts compatible with the environment created. Go ahead an run the following command from /opt/OSCAR to start configuring the controller and compute hosts.
+
 ```
 cd /opt/OSCAR
 ansible-playbook bootstrap-openstack-play.yml
 ```
+
 The above command should have cloned openstack-ansible repo in /opt directory and changed some configuration files to suit the environment created.
 
 
