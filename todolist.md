@@ -1,4 +1,4 @@
-1. Creating a tutorial for using neutron client on controller node to create the external network and configure it. Started working on it new_post_deployment.md 
+1. Creating a tutorial for using neutron client on controller node to create the external network and configure it. Started working on it new_post_deployment.md. Added all the commands to this file write for those commands is pending. 
 
 2. Add the instructions for using horizon dashboard 
 
