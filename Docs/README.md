@@ -28,7 +28,7 @@ Another way of dealing with this is just by opening and copying the content of i
 
 < Needs some proper explaination or a step by step process instead of being all over the place like this >
 
-# Pre-deployment setup
+### Pre-deployment setup
 ```
 apt-get update
 apt-get install git
@@ -46,7 +46,7 @@ git clone https://github.com/cloudandbigdatalab/OSCAR.git
 
 cd OSCAR
 ```
-# Configuring the OSCAR config file
+### Configuring the OSCAR config file
 Create /etc/oscar folder and copy oscar.conf.example to this folder as oscar.conf
 ```
 mkdir /etc/oscar
