@@ -9,7 +9,7 @@
 
 ![Architecture](https://github.com/cloudandbigdatalab/OSCAR/blob/master/Docs/Figures/Slide3.jpg "Architecture" )
 
-OCI OpenStack Ansible project uses Openstack Ansible Deployment(OSD) for the installation of OpenStack. In addition to OSD, this project consists of scripts that prepare the hosts for the installation. This is a quick start guide for using this project.This guide helps the user to deploy OpenStack on 4 nodes, 1 controller node and 3 compute nodes.  
+OSCAR project uses Openstack Ansible Deployment(OSD) for the installation of OpenStack. In addition to OSD, this project consists of scripts that prepare the hosts for the installation. This is a quick start guide for using this project.This guide helps the user to deploy OpenStack on 4 nodes, 1 controller node and 3 compute nodes.  
 
 ## Provisioning the Bare-Metal instances on Chameleon Cloud.
 
