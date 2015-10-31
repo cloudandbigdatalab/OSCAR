@@ -38,10 +38,13 @@ cp /opt/OSCAR/oscar.conf.example /etc/oscar/oscar.conf
 ```
 
 In this directory there is an config which should have the information of all the hosts. Open oscar.conf file with your favorite editor
+
 ```
 nano /etc/oscar/oscar.conf
 ```
+
 The file looks like this
+
 ```
 network:
   container_network: 172.17.100.0/24
@@ -57,6 +60,7 @@ nodes:
     - 10.20.109.80
 
 ```
+
 Add the ip address of controller and compute hosts at appropriate section as shown above and save the file.
 
 #### Installing Ansible 
