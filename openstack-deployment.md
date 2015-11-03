@@ -65,6 +65,16 @@ Horizon is the canonical implementation of OpenStack’s Dashboard, which provid
 ``` 
 openstack-ansible os-horizon-install.yml
 ```
+
+### Congratulations you have built an OpenStack Cloud
+Now go ahead and access the horizon dashboard from any internet browser ```http://<Controller-IP>``` . For example
+
+```
+http://120.11.1.10
+```
+OpenStack is setup up successfully if horizon dashboard is accesable. Although OpenStack is up and running network is not setup yet. Different instructions are provided in the documentation for creating different network configurations. 
+
+***Documentation in progress for Network config***
 <!--
 #### Ceilometer installation
 The Ceilometer project aims to deliver a unique point of contact for billing systems to acquire all of the measurements they need to establish customer billing, across all current OpenStack core components with work underway to support future OpenStack components \[[8]\].
