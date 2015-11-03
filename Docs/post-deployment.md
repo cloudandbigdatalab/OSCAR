@@ -43,6 +43,9 @@ lxc-attach --name aio1_utility_container-52c1aa7b
 This command should log the user into root of the utility container ```root@aio1_utility_container-52c1aa7b:~#```. To create a public network we are going to use ```neutron net-create``` and ```neutron subnet-create``` commands. The public network should be on the same network as the ```vm_gateway``` which can be configured from chameleon_cloud_nodes (ansible inventory file). The default value of ```vm_gateway``` is ```172.29.248.1```. So the public network we are going to create is ```172.29.248.1/24``` network. Use the following command to create a network named public_net
 
 ```
+cd ~/
+# export environment variables for username and password and other variables
+source openrc
 neutron net-create --provider:physical_network=flat --provider:network_type=flat --shared public_net --router:external
 ```
 Create a subnet under public-net network. Provide network ip, gateway ip and allocation pool as arguments.
