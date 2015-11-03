@@ -65,7 +65,7 @@ Horizon is the canonical implementation of OpenStack’s Dashboard, which provid
 ``` 
 openstack-ansible os-horizon-install.yml
 ```
-
+<!--
 #### Ceilometer installation
 The Ceilometer project aims to deliver a unique point of contact for billing systems to acquire all of the measurements they need to establish customer billing, across all current OpenStack core components with work underway to support future OpenStack components \[[8]\].
 
@@ -86,7 +86,7 @@ Swift is a highly available, distributed, eventually consistent object/blob stor
 ``` 
 openstack-ansible os-swift-install.yml
 ```
-
+-->
 
 
 [1]: http://docs.openstack.org/developer/keystone/
