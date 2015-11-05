@@ -87,4 +87,33 @@ ansible-playbook bootstrap-openstack-play.yml
 
 The above command should have cloned openstack-ansible repo in /opt directory and changed some configuration files to suit the environment created.
 
+#### Enabling scp_if_true in /opt/openstack-ansible/playbooks/ansible.cfg 
+
+Open /opt/openstack-ansible/playbooks/ansible.cfg using your favorite editor
+
+```
+nano /opt/openstack-ansible/playbooks/ansible.cfg 
+```
+
+add ```scp_if_true=True``` below ```[ssh_connection]``` section as shown below
+
+```
+[defaults]
+gathering = smart
+
+#hostfile = chameleon_cloud_node
+hostfile = inventory
+host_key_checking = False
+
+# Set color options
+nocolor = 0
+
+# SSH timeout
+timeout = 120
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o TCPKeepAlive=yes -o ServerAliveInterval=5 -o ServerAliveCountMax=3
+scp_if_ssh=True
+```
+
 
