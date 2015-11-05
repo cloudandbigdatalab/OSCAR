@@ -223,13 +223,12 @@ sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/openstack_deploy/openstack_user_config.y
 #Adding compute nodes and their management ip's from management_ips file in openstack_user_config.yml
 # ***** Needs some testing 
 
-break_var=$(sed '1,/computes:/d;/- /d' /etc/oscar/oscar.conf | sed '1,/computes:/d;/- /d' /etc/oscar/oscar.conf | sed '1!d')
+break_var=$(sed '/^$/d;1,/computes:/d;/- /d' /etc/oscar/oscar.conf | sed '/^$/d;1,/computes:/d;/- /d' /etc/oscar/oscar.conf | sed '1!d')
 
-computes_count=$(sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf | wc -l)
+computes_count=$(sed "/^$/d;1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf | wc -l)
 
 #echo $computes_count
-
-sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf
+#sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf
 
 management_ip=$MANAGEMENT_IP
 management_ip_base=$(echo $management_ip | cut -d"." -f1-3)
