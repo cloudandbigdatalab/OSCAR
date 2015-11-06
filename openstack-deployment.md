@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Introduction and Overview
+title: OpenStack Deployment
 permalink: /openstack-deployment/
 ---
 
