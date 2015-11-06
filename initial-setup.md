@@ -14,7 +14,7 @@ We strongly recommend using Ubuntu 14.04 as operating system for the servers. Op
  
 #### Key pair authentication
 
-OCI-OpenStack-Ansible and OpenStack-ansible projects run based on ansible. For using ansible with the cluster the controller node has to have access to all the nodes along with itself. The access to the controller nodes can be granted using key pairs. Once the servers are up and running, create a key pair on controller node add the public key to authorized_keys of all the compute nodes and also controller node itself. Here are the set of instructions to do that.
+OSCAR and OpenStack-ansible projects run based on ansible. For using ansible with the cluster the controller node has to have access to all the nodes along with itself. The access to the controller nodes can be granted using key pairs. Once the servers are up and running, create a key pair on controller node add the public key to authorized_keys of all the ***all nodes along with controller node itself***. Here are the set of instructions to do that.
 
 Create a key pair on controller node. Make sure that you are logged in as root user while performing these steps.
 
@@ -22,14 +22,47 @@ Create a key pair on controller node. Make sure that you are logged in as root u
  ssh-keygen -f .ssh/id_rsa -N ""  
 ```
 
-This command should have created two files ``` id_rsa ``` and ``` id_rsa.pub ``` in ``` .ssh/ ``` folder. These files are called as a key-pair. ``` id_rsa ``` is called as private key and ``` id_rsa.pub ``` is called as a public key. Adding the public key into authorized_keys file can be done in two ways. It can be done by using ``` ssh-copy-id ``` or by manually adding it. If the servers can be accessed using password authentication use the following command.
+This command should have created two files ``` id_rsa ``` and ``` id_rsa.pub ``` in ``` .ssh/ ``` folder. These files are called as a key-pair. ``` id_rsa ``` is called as private key and ``` id_rsa.pub ``` is called as a public key.
+
+##### Adding the public keys to the authorized_keys of root user on all nodes including controller node
+
+Adding the public key into authorized_keys file can be done in two ways. 
+ - Using ``` ssh-copy-id ``` 
+ - Manually adding the public key 
+
+##### Using ``` ssh-copy-id ``` 
+This method is simple and works fine when the root user of the nodes can be accessed using password. Use the following command
 
 ```
 ssh-copy-id root@<host ip>
 ```
 
-Where host-ip should be replaced by ip address of all the servers including controller node itself. But in case of Chameleon cloud password authentication is disabled by default. So it is better to add it manually by appending the contents of ``` id_rsa.pub``` into the ``` .ssh/authorized_keys ``` on all the nodes along with the controller node. Check if all the nodes can be accessed using ``` ssh root@<node-ip> ``` command. Once controller node has access to all the nodes, the setup is ready for pre deployment procedures.
+Where host-ip should be replaced by ip address of all the servers including controller node itself.
 
+##### Manually adding the public key
+In case of Chameleon cloud, password authentication is disabled by default. And if you can access the root user on the node only using private key then follow this method. 
+
+On your controller node open the open ``` ~/.ssh/id_rsa.pub ```
+
+```
+cat ~/.ssh/id_rsa.pub
+```
+
+ssh to the node and change to root user, 
+
+```
+ssh userid@<node-ip>
+sudo -i
+```
+
+Now, open the `~/.ssh/authorized_keys` file using nano or vim and add the copied contents,the public key, to the file and save it. Make sure this is done for all the nodes.
+
+
+
+Check if all the nodes can be accessed using ``` ssh root@<node-ip> ``` command. Once controller node has access to all the nodes, the setup is ready for pre deployment procedures.
+
+#### Update and Install git 
+Its time to clone OSCAR repo, lets update the apt-packages lists and install git 
 
 ```
 apt-get update
