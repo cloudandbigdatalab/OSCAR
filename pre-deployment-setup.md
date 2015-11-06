@@ -1,15 +1,10 @@
 ---
 layout: page
-title: Introduction and Overview
+title: Pre-deployment setup
 permalink: /pre-deployment/
 ---
 
 ### Pre-deployment setup
-
-```
-apt-get update
-apt-get install git
-```
 
 #### Cloning the git repository
 OCI-OpenStack-Ansible has to be cloned into ```/opt/``` directory. Create ```/opt``` directory if it doesn't exists and change into that directory
