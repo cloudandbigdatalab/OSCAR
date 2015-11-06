@@ -27,8 +27,10 @@ This command should have created two files ``` id_rsa ``` and ``` id_rsa.pub ```
 ##### Adding the public keys to the authorized_keys of root user on all nodes including controller node
 
 Adding the public key into authorized_keys file can be done in two ways. 
- - Using ``` ssh-copy-id ``` 
- - Manually adding the public key 
+
+   - Using ``` ssh-copy-id ``` 
+
+   - Manually adding the public key 
 
 ##### Using ``` ssh-copy-id ``` 
 This method is simple and works fine when the root user of the nodes can be accessed using password. Use the following command
