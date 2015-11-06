@@ -15,7 +15,7 @@ apt-get install git
 OCI-OpenStack-Ansible has to be cloned into ```/opt/``` directory. Create ```/opt``` directory if it doesn't exists and change into that directory
 
 ```
-mkdir /opt
+mkdir -p /opt
 cd /opt
 ```
 
