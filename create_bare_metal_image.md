@@ -21,6 +21,10 @@ This adds all the necessary credentials as environment variables.
 
 ``` 
 yum install git libguestfs-tools-c 
+
+or 
+
+sudo apt-get install libguestfs-tools
 ```
 
 ``` 
