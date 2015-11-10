@@ -68,5 +68,5 @@ Its time to clone OSCAR repo, lets update the apt-packages lists and install git
 
 ```
 apt-get update
-apt-get install git 
+apt-get install git -y
 ```
