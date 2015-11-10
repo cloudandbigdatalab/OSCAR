@@ -112,7 +112,7 @@ Finally create a router and interface it with v-ext-net
 ```
 neutron router-create v-router
 
-neutron router-gateway-set v-router my_os_ext_net
+neutron router-gateway-set v-router v-ext-net
 ```
 
 The virtual external network is setup. The next steps would be to setup a private network using horizon, interfacing it with ```v-router``` and spinning an instance on private network.
