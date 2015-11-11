@@ -106,10 +106,10 @@ Now to create an external virtual network with name **v-ext-net** use the follow
 neutron net-create --provider:physical_network=flat --provider:network_type=flat --shared --router:external v-ext-net
 ```
 
-Now use the following command to create a sub-net for **v-ext-net** with name **v-ext-sub-net** and add the allocation pool of IP's gathered in the intial steps. If the IP's gathered are in in order say ```10.xx.xx.10, 10.xx.xx.11, 10.xx.xx.12``` then in the command directly use ```--allocation-pool start=10.20.108.129,end=10.20.108.129``` if the gathered IP's are not in order then different allocation pools with same start and end IP's should be used. The command below uses different allocation pools which means the gathered IP's are not in order.
+Now use the following command to create a sub-net for **v-ext-net** with name **v-ext-sub-net** and add the allocation pool of IP's gathered in the intial steps. If the IP's gathered are in in order say ```10.xx.xx.10, 10.xx.xx.11, 10.xx.xx.12``` then in the command directly use ```--allocation-pool start=10.xx.xx.10,end=10.xx.xx.12``` if the gathered IP's are not in order then different allocation pools with same start and end IP's should be used. The command below uses different allocation pools which means the gathered IP's are not in order.
 
 ```
-neutron subnet-create v-ext-net 10.20.108.0/23 --name v-ext-sub-net --gateway=10.20.109.254 --allocation-pool start=10.20.108.128,end=10.20.108.128 --allocation-pool start=10.20.108.129,end=10.20.108.129 --allocation-pool start=10.20.108.13,end=10.20.108.13
+neutron subnet-create v-ext-net 10.20.108.0/23 --name v-ext-sub-net --gateway=10.20.109.254 --allocation-pool start=10.xx.xx.11,end=10.xx.xx.11 --allocation-pool start=10.xx.xx.13,end=10.xx.xx.13 --allocation-pool start=10.xx.xx.15,end=10.xx.xx.15
 ```
 
 Finally create a router and interface it with v-ext-net
