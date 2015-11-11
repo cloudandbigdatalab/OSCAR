@@ -1,4 +1,9 @@
+---
+layout: page
+title: Post Deployment
+permalink: /post-deployment/
 
+---
 
 Once the OSCAR setup is done, OpenStack should be up and running. The next important step would creating a virtual external network so that the VM's on top of our vDC can commounicate with outside world (Internet). For this we have pull a pool of IP's from chameleon shared net and add it to our virtual external network. Follow the steps shown below.
 
