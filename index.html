@@ -2,11 +2,22 @@
 layout: default
 title: OSCAR Documentation
 ---
-
-<div class="module-header">
-       OpenStack Configurator for Academic Research (OSCAR)   
+<div class="row">
+  <div class="col-sm-3 col-lg-3" id="myScrollspy" style="padding-left:2em;">
+  <ul class="nav nav-tabs nav-stacked" data-offset-top="80" data-spy="affix" style="width:320px;">
+      <li class="active" style="text-align:center;"><a href="#oscar">Oscar</a></li>
+      <li><a href="#introduction">1. Introduction</a></li>
+      <li><a href="#requirements">2. Requirements</a></li>
+      <li><a href="#pre-deployment">3. Pre Deployment Setup</a></li>
+      <li><a href="#openstack-deployment"> OpenStack Deployment</a></li>
+      <li><a href="#post-deployment">5. Post Deployment</a></li>
+  </ul>
 </div>
-
+  <div class="col-sm-9 col-lg-9" style="max-width:1120px;">
+    <div id="oscar">
+<div class="module-header">
+       OpenStack Configurator for Academic Research (OSCAR)
+</div>
 <div class="body">
 
   The OSCAR project is designed to simplify OpenStack installation process for building cloud based research computing testbeds. This project has scripts to configre the computing resources and prepare them for OpenStack deployment using OpenStack-Ansible, an official OpenStack project. This package also pulls stable version of the OpenStack-Ansible from github and prepares the configuration files to match the environment.
@@ -14,15 +25,11 @@ title: OSCAR Documentation
   <br>
   OSCAR can also be used to deploy a private cloud on top of Chameleon Cloud BareMetal nodes. With a couple of simple additional commands the private cloud can be configured to have public access. OSCAR offers two different deployment options, step by step installation for beginners to understand the architectural components of Openstack cloud and a one step installation for researchers who wants to deploy a private cloud for performining cutting edge research on Openstack and topics associated with it.
 
+
+
+
+<!--
 </div>
-
-  
-
-<div class="module-header">
-       OSCAR Documentation      
-</div>
-
-<div class="body">
       <a href="introduction/">
         1. Introduction
       </a>
@@ -30,7 +37,7 @@ title: OSCAR Documentation
 
 <div class="body">
       <a href="initial-setup/">
-                  2. Requirements 
+                  2. Requirements
       </a>
 </div>
 
@@ -41,7 +48,7 @@ title: OSCAR Documentation
 </div>
 <div class="body">
       <a href="openstack-deployment/">
-                  4. Openstack deployment 
+                  4. Openstack deployment
       </a>
 </div>
 <div class="body">
@@ -50,7 +57,6 @@ title: OSCAR Documentation
       </a>
 </div>
 
-<!--
 <div class="body">
       <a href="openstack/">
         6. Quick start guide
@@ -66,4 +72,408 @@ title: OSCAR Documentation
 <div>
       <img src="https://github.com/cloudandbigdatalab/OSCAR/blob/gh-pages/assets/figures/Slide7.jpg?raw=True" width="100%">
       <!--<img src="https://github.com/cloudandbigdatalab/OSCAR/blob/gh-pages/assets/figures/Slide7.jpg?raw=True" width="100%">-->
-</div>  
+</div>
+</div>
+
+<div id="introduction">
+  <hr>
+  <div class="post">
+    <header class="post-header">
+      <h1>Introduction</h1>
+    </header>
+
+    <article class="post-content">
+    <h1>OpenStack Configurator for Academic Research (OSCAR)</h1>
+
+  <h3>Introduction</h3>
+
+  <p>OpenStack is the open source software for creating public and private clouds. OpenStack software controls large pools of compute, storage, and networking resources throughout a datacenter, managed through a dashboard or via the OpenStack API. OpenStack works with popular enterprise and open source technologies making it ideal for heterogeneous infrastructure [<a href="https://www.openstack.org">1</a>].</p>
+
+  <p>OpenStack has a modular architecture with various code names for its components. Compute (cloud fabric controller - Nova), image service (Glance), dashboard (Horizon), networking (Neutron), block storage (Cinder), object storage (Swift) and identity service (Keystone) are some important components. OpenStack can be setup with mix and match of different components. Several organizations have their own configuations for installing OpenStack, OpenStack-Ansible is one of them. OpenStack-Ansible is an official OpenStack project which aims to deploy production environments from source in a way that makes it scalable while also being simple to operate, upgrade, and grow [<a href="https://github.com/openstack/openstack-ansible">2</a>].</p>
+
+  <p>OpenStack setup in multi-node configuration is non trivial and requires proper configuration of computing resources. In academia provisioning these resources is arduous. Due to this complex nature of OpenStack installation academic research in this field has not advanced. </p>
+
+  <p>The OSCAR project is designed to simplify the configuration of resources and OpenStack installation process. This project has scripts to configure the computing resources and prepare them for OpenStack deployment using OpenStack-Ansible, an official OpenStack project. This package also pulls stable version of the OpenStack-Ansible from github and edits the configuration files to match the configured environment.</p>
+
+  <h3>Overview</h3>
+
+  <!--![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide6.jpg "Components of cluster" )-->
+
+  <p><img src="https://github.com/cloudandbigdatalab/OSCAR/blob/gh-pages/assets/figures/Slide6.jpg?raw=True" width="100%"></p>
+
+  <p>This guide gives a walk through OpenStack deployment on 5 nodes cluster (1 Controller node and 4 Compute nodes). The Controller and Compute nodes will have different components installed in them as shown in figure. </p>
+
+  <p><strong><em>Controller node:</em></strong> As the name suggests, this node controls the OpenStack cluster. This contains all the important components for proper functioning of the OpenStack cluster. Components like identity service, image service, networking and compute are installed in this node.</p>
+
+  <p><strong><em>Compute node:</em></strong> The virtual machines are hosted in these nodes. The compute service, hypervisor and network agents are installed in this node. </p>
+
+  <!--![Components of cluster](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide4.jpg "Components of cluster" )-->
+
+  <p><img src="https://github.com/cloudandbigdatalab/OSCAR/blob/gh-pages/assets/figures/Slide4.jpg?raw=True" width="100%"></p>
+
+  <p>The deployment process is 4 fold as mentioned below. </p>
+
+  <ul>
+  <li>Servers setup </li>
+  <li>Pre deployment </li>
+  <li>OpenStack deployment </li>
+  <li>Post deployment </li>
+  </ul>
+
+  <!--
+
+  - Servers setup and requirements
+  - Pre deployment instructions
+  - OpenStack deployment
+  - Post deployment instructions
+
+  -->
+
+    </article>
+</div>
+</div>
+<div id="requirements">
+  <hr>
+  <div class="post">
+
+  <header class="post-header">
+  <h1>Initial setup and requirements</h1>
+</header>
+
+<article class="post-content">
+<h4>System requirements</h4>
+
+<p>We strongly recommend using Ubuntu 14.04 as operating system for the servers. Openstack deployment using this project is developed and tested for usage with Ubuntu 14.04.   </p>
+
+<h4>Provisioning a bare metal server using chameleon cloud</h4>
+
+<p>Chameleon cloud users may have to add an Ubuntu 14.04 image before they spin the servers. This process can be found here <Link for adding a new bare metal image>. For additional informtion on usage of chameleon cloud please visit www.chameleoncloud.org.</p>
+
+<h4>Key pair authentication</h4>
+
+<p>OSCAR and OpenStack-ansible projects run based on ansible. For using ansible with the cluster the controller node has to have access to all the nodes along with itself. The access to the controller nodes can be granted using key pairs. Once the servers are up and running, create a key pair on controller node add the public key to authorized_keys of all the <strong><em>all nodes along with controller node itself</em></strong>. Here are the set of instructions to do that.</p>
+
+<p>Create a key pair on controller node. Make sure that you are logged in as root user while performing these steps.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"> ssh-keygen -f .ssh/id_rsa -N &quot;&quot;
+</code></pre></div>
+<p>This command should have created two files <code>id_rsa</code> and <code>id_rsa.pub</code> in <code>.ssh/</code> folder. These files are called as a key-pair. <code>id_rsa</code> is called as private key and <code>id_rsa.pub</code> is called as a public key.</p>
+
+<h5>Adding the public keys to the authorized_keys of root user on all nodes including controller node</h5>
+
+<p>Adding the public key into authorized_keys file can be done in two ways. </p>
+
+<ul>
+<li><p>Using <code>ssh-copy-id</code> </p></li>
+<li><p>Manually adding the public key </p></li>
+</ul>
+
+<h5>Using <code>ssh-copy-id</code></h5>
+
+<p>This method is simple and works fine when the root user of the nodes can be accessed using password. Use the following command</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh-copy-id root@&lt;host ip&gt;
+</code></pre></div>
+<p>Where host-ip should be replaced by ip address of all the servers including controller node itself.</p>
+
+<h5>Manually adding the public key</h5>
+
+<p>In case of Chameleon cloud, password authentication is disabled by default. And if you can access the root user on the node only using private key then follow this method. </p>
+
+<p>On your controller node open the open <code>~/.ssh/id_rsa.pub</code></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cat ~/.ssh/id_rsa.pub
+</code></pre></div>
+<p>ssh to the node and change to root user, </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh userid@&lt;node-ip&gt;
+sudo -i
+</code></pre></div>
+<p>Now, open the <code>~/.ssh/authorized_keys</code> file using nano or vim and add the copied contents,the public key, to the file and save it. Make sure this is done for all the nodes.</p>
+
+<p>Check if all the nodes can be accessed using <code>ssh root@&lt;node-ip&gt;</code> command. Once controller node has access to all the nodes, the setup is ready for pre deployment procedures.</p>
+
+<h4>Update and Install git</h4>
+
+<p>Its time to clone OSCAR repo, lets update the apt-packages lists and install git </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">apt-get update
+apt-get install git -y
+</code></pre></div>
+</article>
+</div>
+</div>
+<div id="pre-deployment">
+  <hr>
+  <div class="post">
+
+  <header class="post-header">
+      <h1>Pre-deployment setup</h1>
+    </header>
+
+    <article class="post-content">
+    <h3>Pre-deployment setup</h3>
+
+  <h4>Cloning the git repository</h4>
+
+  <p>OCI-OpenStack-Ansible has to be cloned into <code>/opt/</code> directory. Create <code>/opt</code> directory if it doesn&#39;t exists and change into that directory</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">mkdir -p /opt
+  cd /opt
+  </code></pre></div>
+  <p>Clone the github repo of OSCAR and enter the OSCAR directory</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">git clone https://github.com/cloudandbigdatalab/OSCAR.git
+
+  cd OSCAR
+  </code></pre></div>
+  <h4>Configuring the OSCAR config file</h4>
+
+  <p>Create <code>/etc/oscar</code> folder and copy <code>oscar.conf.example</code> to this folder as <code>oscar.conf</code></p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">mkdir /etc/oscar
+
+  cp /opt/OSCAR/oscar.conf.example /etc/oscar/oscar.conf
+  </code></pre></div>
+  <p>In this directory there is an config which should have the information of all the hosts. Open oscar.conf file with your favorite editor</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">nano /etc/oscar/oscar.conf
+  </code></pre></div>
+  <p>The file looks like this</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">network:
+    container_network: 172.17.100.0/24
+    tunnel_network: 172.17.101.0/24
+    storage_network: 172.17.102.0/24
+    vm_gateway: 172.17.248.1
+
+  nodes:
+    controller: 10.20.109.72
+    computes:
+      - 10.20.109.78
+      - 10.20.109.79
+      - 10.20.109.80
+  </code></pre></div>
+  <p>Add the ip address of controller and compute hosts at appropriate section as shown above and save the file.</p>
+
+  <h4>Installing Ansible</h4>
+
+  <p>Ansible is required to deploy OpenStack using OSCAR project. There is a bootstrap script available in /opt/OSCAR/scripts directory which sets the ansible up for the user.</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">cd /opt/OSCAR/scripts
+  ./bootstrap-ansible.sh
+  </code></pre></div>
+  <h4>Preparing the environment for OpenStack deployment</h4>
+
+  <!--![Architecture](https://github.com/UTSA-OCI/OCI-OpenStack-Ansible/blob/master/Docs/Figures/Slide1.jpg "Architecture" )-->
+
+  <p><img src="https://github.com/cloudandbigdatalab/OSCAR/blob/gh-pages/assets/figures/Slide7.jpg?raw=True" width="100%"></p>
+
+  <p>The project comes with an set of ansible playbooks which can prep the controller and compute hosts environment for Openstack deployment using openstack-ansible. These playbooks also edit some configuration files from the original openstack-ansible project to make those scripts compatible with the environment created. Go ahead an run the following command from /opt/OSCAR to start configuring the controller and compute hosts.</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">cd /opt/OSCAR
+  ansible-playbook bootstrap-openstack-play.yml
+  </code></pre></div>
+  <p>The above command should have cloned openstack-ansible repo in /opt directory and changed some configuration files to suit the environment created.</p>
+
+  <h4>Enabling scp<em>if</em>true in /opt/openstack-ansible/playbooks/ansible.cfg</h4>
+
+  <p>Open /opt/openstack-ansible/playbooks/ansible.cfg using your favorite editor</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">nano /opt/openstack-ansible/playbooks/ansible.cfg
+  </code></pre></div>
+  <p>add <code>scp_if_true=True</code> below <code>[ssh_connection]</code> section as shown below</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">[defaults]
+  gathering = smart
+
+  #hostfile = chameleon_cloud_node
+  hostfile = inventory
+  host_key_checking = False
+
+  # Set color options
+  nocolor = 0
+
+  # SSH timeout
+  timeout = 120
+
+  [ssh_connection]
+  ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o TCPKeepAlive=yes -o ServerAliveInterval=5 -o ServerAliveCountMax=3
+  scp_if_ssh=True
+  </code></pre></div>
+    </article>
+</div>
+
+</div>
+<div id="openstack-deployment">
+  <hr>
+  <div class="post">
+
+  <header class="post-header">
+     <h1>OpenStack Deployment</h1>
+   </header>
+
+   <article class="post-content">
+   <h3>OpenStack deployment using OpenStack-Ansible project scripts.</h3>
+
+ <p>Once the network configuration of the controller and compute hosts is properly done, deploying openstack using openstack-ansible is very simple. Follow the commands below.</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">cd /opt/openstack-ansible/playbooks
+ openstack-ansible setup-hosts.yml
+ openstack-ansible haproxy-install.yml
+ openstack-ansible setup-infrastructure.yml
+ </code></pre></div>
+ <h4>Keystone installation</h4>
+
+ <p>Keystone is an OpenStack project that provides Identity, Token, Catalog and Policy services for use specifically by projects in the OpenStack family. It implements OpenStack’s Identity API [<a href="http://docs.openstack.org/developer/keystone/">1</a>].</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">openstack-ansible os-keystone-install.yml
+ </code></pre></div>
+ <h4>Glance installation</h4>
+
+ <p>The Glance project provides a service where users can upload and discover data assets that are meant to be used with other services. This currently includes images and metadata definitions.</p>
+
+ <p>Glance image services include discovering, registering, and retrieving virtual machine images. Glance has a RESTful API that allows querying of VM image metadata as well as retrieval of the actual image [<a href="http://docs.openstack.org/developer/glance/">2</a>].</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">openstack-ansible os-glance-install.yml
+ </code></pre></div>
+ <h4>Cinder installation</h4>
+
+ <p>Cinder is a Block Storage service for OpenStack. It&#39;s designed to allow the use of either a reference implementation (LVM) to present storage resources to end users that can be consumed by the OpenStack Compute Project (Nova). The short description of Cinder is that it virtualizes pools of block storage devices and provides end users with a self service API to request and consume those resources without requiring any knowledge of where their storage is actually deployed or on what type of device [<a href="https://wiki.openstack.org/wiki/Cinder">3</a>].</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">openstack-ansible os-cinder-install.yml
+ </code></pre></div>
+ <h4>Nova installation</h4>
+
+ <p>Nova is an OpenStack project designed to provide power massively scalable, on demand, self service access to compute resources [<a href="http://docs.openstack.org/developer/nova/">4</a>].</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">openstack-ansible os-nova-install.yml
+ </code></pre></div>
+ <h4>Neutron installation</h4>
+
+ <p>OpenStack Neutron is an SDN networking project focused on delivering networking-as-a-service (NaaS) in virtual compute environments. Neutron has replaced the original networking application program interface (API), called Quantum, in OpenStack. Neutron is designed to address deficiencies in “baked-in” networking technology found in cloud environments, as well as the lack of tenant control in multi-tenant environments over the network topology and addressing, which makes it hard to deploy advanced networking services [<a href="https://www.sdxcentral.com/resources/open-source/what-is-openstack-quantum-neutron/">5</a>].</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">openstack-ansible os-neutron-install.yml
+ </code></pre></div>
+ <h4>Heat installation</h4>
+
+ <p>Heat is the main project in the OpenStack Orchestration program. It implements an orchestration engine to launch multiple composite cloud applications based on templates in the form of text files that can be treated like code. A native Heat template format is evolving, but Heat also endeavours to provide compatibility with the AWS CloudFormation template format, so that many existing CloudFormation templates can be launched on OpenStack. Heat provides both an OpenStack-native ReST API and a CloudFormation-compatible Query API [<a href="https://wiki.openstack.org/wiki/Heat">6</a>].</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">openstack-ansible os-heat-install.yml
+ </code></pre></div>
+ <h4>Horizon installation</h4>
+
+ <p>Horizon is the canonical implementation of OpenStack’s Dashboard, which provides a web based user interface to OpenStack services including Nova, Swift, Keystone, etc [<a href="http://docs.openstack.org/developer/horizon/">7</a>].</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">openstack-ansible os-horizon-install.yml
+ </code></pre></div>
+ <h3>Congratulations you have built an OpenStack Cloud</h3>
+
+ <p>Now go ahead and access the horizon dashboard from any internet browser <code>http://&lt;Controller-IP&gt;</code> . For example</p>
+ <div class="highlight"><pre><code class="language-text" data-lang="text">http://120.11.1.10
+ </code></pre></div>
+ <p>OpenStack is setup up successfully if horizon dashboard is accesable. Although OpenStack is up and running network is not setup yet. Different instructions are provided in the documentation for creating different network configurations. </p>
+
+ <p><strong><em>Documentation in progress for Network config</em></strong></p>
+
+ <!--
+ #### Ceilometer installation
+ The Ceilometer project aims to deliver a unique point of contact for billing systems to acquire all of the measurements they need to establish customer billing, across all current OpenStack core components with work underway to support future OpenStack components \[[8]\].
+
+ ```
+ openstack-ansible os-ceilometer-install.yml
+ ```
+
+ #### Aodh installation
+ Aodh is the alarm engine of the Ceilometer project
+
+ ```
+ openstack-ansible os-aodh-install.yml
+ ```
+
+ #### Swift installation
+ Swift is a highly available, distributed, eventually consistent object/blob store. Organizations can use Swift to store lots of data efficiently, safely, and cheaply \[[9]\].
+
+ ```
+ openstack-ansible os-swift-install.yml
+ ```
+ -->
+
+   </article>
+</div>
+
+</div>
+<div id="post-deployment">
+  <hr>
+        <div class="post">
+  <header class="post-header">
+      <h1>Post Deployment</h1>
+    </header>
+
+    <article class="post-content">
+    <p>Once the OSCAR setup is done, OpenStack should be up and running. The next important step would creating a virtual external network so that the VM&#39;s on top of our vDC can commounicate with outside world (Internet). For this we have pull a pool of IP&#39;s from chameleon shared net and add it to our virtual external network. Follow the steps shown below.</p>
+
+  <h4>Requesting IP&#39;s from chameleon shared net</h4>
+
+  <p>By default <code>neutronclient</code> should be installed on chameleon cloud nodes. If it is not installed, install it using pip</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">pip install python-neutronclient
+  </code></pre></div>
+  <p>From your project on Chalmeleon dashboard <strong>download the api access</strong> and <strong>save</strong> the contents to <code>cc_openrc</code> in the home directory of the controller node. These steps for requesting a pool of IP&#39;s from chameleon cloud can be executed from any machine, there is no restricition that this should be done from the contoller node itself. But Creating virtual external network for the OSCAR vDC should be done on chameleon cloud itself. </p>
+
+  <p>Source cc_openrc file and enter your chameleon account password. This file exports all credentials requeired for communicating with chameleon cloud as environmental variables and the following commands use these environment variables while talking to chameleon cloud.</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text"># Make sure you read the above two paragraphs and
+  # downloaded the required contents before proceeding forward.
+  source cc_openrc
+  </code></pre></div>
+  <p>Check to see if chameleon cloud is reponding for your neutron-clint commands. The following command gives a list for networs available on chamleon cloud. </p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">neutron net-list
+  </code></pre></div>
+  <p>If something similar to this is displayed then the neutron-client is working fine. If it is not please visit back the <code>source cc_openrc</code> step and make sure password you provided is right</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">+---------------------+------------+-------------------------------+
+  | id                  | name       | subnets                       |
+  +---------------------+------------+-------------------------------+
+  | &lt;network uuid&gt;      | sharednet1 | &lt;sub-net uuid&gt; 10.20.108.0/23 |
+  | &lt;network uuid&gt;      | ext-net    | &lt;sub-net uuid&gt;                |
+  +---------------------+------------+-------------------------------+
+  </code></pre></div>
+  <p>Now request chameleon cloud for a pool of IP&#39;s. The following step requests 3 IP&#39;s</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">neutron port-create sharednet1
+
+  neutron port-create sharednet1
+
+  neutron port-create sharednet1
+  </code></pre></div>
+  <p>When you type in <code>neutron port-create sharednet1</code> you should see an output something similar to this</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">Created a new port:
+  +-----------------------+---------------------------------------------------------------+
+  | Field                 | Value                                                         |
+  +-----------------------+---------------------------------------------------------------+
+  | admin_state_up        | True                                                          |
+  | allowed_address_pairs |                                                               |
+  | binding:vnic_type     | normal                                                        |
+  | device_id             |                                                               |
+  | device_owner          |                                                               |
+  | fixed_ips             | {&quot;subnet_id&quot;: &quot;&lt;sub-net uuid&gt;&quot;, &quot;ip_address&quot;: &quot;10.20.109.33&quot;} |
+  | id                    | &lt;some uuid&gt;                                                   |
+  | mac_address           | &lt; mac_address of the port&gt;                                    |
+  | name                  |                                                               |
+  | network_id            | &lt;network uuid&gt;                                                |
+  | security_groups       | &lt;security group related uuid&gt;                                 |
+  | status                | DOWN                                                          |
+  | tenant_id             | &lt;project name&gt;                                                |
+  +-----------------------+---------------------------------------------------------------+
+  </code></pre></div>
+  <p>Save the IP address from these messages and we will be using these IP addresses in coming steps.</p>
+
+  <p>Unset the following environment variables if you are doing this process on controller because, we are about to source openrc for our OSCAR vDC and our OSCAR vDC doesn&#39;t have TENANT<em>ID and REGION</em>NAME parameters so when we source it, the commands assumes that these two are available on our vDC and gives us an error</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">unset OS_TENANT_ID
+  unset OS_REGION_NAME
+  </code></pre></div>
+  <h4>Creating virtual external network for the OSCAR vDC</h4>
+
+  <p>The following steps would guide you in creating an virtual external network for OSCAR vDC. <strong>List the containers running on the controller node and attach to the neutron agents container</strong>. </p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text"># List the containers
+  lxc-ls
+  </code></pre></div>
+  <p>In our case name of  <strong>neutron agents container</strong> was <strong>aio1<em>neutron</em>agents_container-128a859f</strong> so to attach to the container we used </p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">lxc-attach --name aio1_neutron_agents_container-128a859f
+  </code></pre></div>
+  <p>Now to create an external virtual network with name <strong>v-ext-net</strong> use the following command</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">neutron net-create --provider:physical_network=flat --provider:network_type=flat --shared --router:external v-ext-net
+  </code></pre></div>
+  <p>Now use the following command to create a sub-net for <strong>v-ext-net</strong> with name <strong>v-ext-sub-net</strong> and add the allocation pool of IP&#39;s gathered in the intial steps. If the IP&#39;s gathered are in in order say <code>10.xx.xx.10, 10.xx.xx.11, 10.xx.xx.12</code> then in the command directly use <code>--allocation-pool start=10.xx.xx.10,end=10.xx.xx.12</code> if the gathered IP&#39;s are not in order then different allocation pools with same start and end IP&#39;s should be used. The command below uses different allocation pools which means the gathered IP&#39;s are not in order.</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">neutron subnet-create v-ext-net 10.20.108.0/23 --name v-ext-sub-net --gateway=10.20.109.254 --allocation-pool start=10.xx.xx.11,end=10.xx.xx.11 --allocation-pool start=10.xx.xx.13,end=10.xx.xx.13 --allocation-pool start=10.xx.xx.15,end=10.xx.xx.15
+  </code></pre></div>
+  <p>Finally create a router and interface it with v-ext-net</p>
+  <div class="highlight"><pre><code class="language-text" data-lang="text">neutron router-create v-router
+
+  neutron router-gateway-set v-router v-ext-net
+  </code></pre></div>
+  <p>The virtual external network is setup. The next steps would be to setup a private network using horizon, interfacing it with <code>v-router</code> and spinning an instance on private network.</p>
+
+    </article>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
