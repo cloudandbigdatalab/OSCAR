@@ -1,0 +1,114 @@
+---
+cidr_networks:
+  container: CONTAINER_NETWORK
+  tunnel: TUNNEL_NETWORK
+  storage: STORAGE_NETWORK
+
+used_ips:
+  - "172.29.236.1,172.29.236.50"
+  - "172.29.240.1,172.29.240.50"
+  - "172.29.244.1,172.29.244.50"
+  - "172.29.248.1,172.29.248.50"
+
+global_overrides:
+  internal_lb_vip_address: MGMTIP
+  external_lb_vip_address: 192.168.1.1
+  tunnel_bridge: "br-vxlan"
+  management_bridge: "br-mgmt"
+  provider_networks:
+    - network:
+        container_bridge: "br-mgmt"
+        container_type: "veth"
+        container_interface: "eth1"
+        ip_from_q: "container"
+        type: "raw"
+        group_binds:
+          - all_containers
+          - hosts
+        is_container_address: true
+        is_ssh_address: true
+    - network:
+        container_bridge: "br-vxlan"
+        container_type: "veth"
+        container_interface: "eth10"
+        ip_from_q: "tunnel"
+        type: "vxlan"
+        range: "1:1000"
+        net_name: "vxlan"
+        group_binds:
+          - neutron_linuxbridge_agent
+    - network:
+        container_bridge: "br-vlan"
+        container_type: "veth"
+        container_interface: "eth12"
+        type: "flat"
+        net_name: "flat"
+        group_binds:
+          - neutron_linuxbridge_agent
+    - network:
+        container_bridge: "br-storage"
+        container_type: "veth"
+        container_interface: "eth2"
+        ip_from_q: "storage"
+        type: "raw"
+        group_binds:
+          - glance_api
+          - cinder_api
+          - cinder_volume
+          - nova_compute
+          - swift_proxy
+
+shared-infra_hosts:
+  aio1:
+    affinity:
+      galera_container: 1
+      rabbit_mq_container: 1
+    ip: MGMTIP
+
+os-infra_hosts:
+  aio1:
+    affinity:
+      horizon_container: 1
+    ip: MGMTIP
+
+storage-infra_hosts:
+  aio1:
+    ip: MGMTIP
+
+repo-infra_hosts:
+  aio1:
+    affinity:
+      repo_container: 1
+    ip: MGMTIP
+
+identity_hosts:
+  aio1:
+    # Keystone is set to multiple to test clustering. This test only requires x2.
+    affinity:
+      keystone_container: 1
+    ip: MGMTIP
+
+compute_hosts:
+
+storage_hosts:
+  aio1:
+    ip: MGMTIP
+    container_vars:
+      cinder_backends:
+        limit_container_types: cinder_volume
+        lvm:
+          volume_group: cinder-volumes
+          volume_driver: cinder.volume.drivers.lvm.LVMVolumeDriver
+          volume_backend_name: LVM_iSCSI
+
+log_hosts:
+  aio1:
+    ip: MGMTIP
+
+network_hosts:
+  aio1:
+    ip: MGMTIP
+
+haproxy_hosts:
+  aio1:
+    ip: MGMTIP
