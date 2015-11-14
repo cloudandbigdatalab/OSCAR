@@ -103,7 +103,7 @@ wget http://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud-201411
 glance image-list
 ```
 
-# CoreOS 766.5.0
+# 3. CoreOS 766.5.0
 
 ## Creating CoreOS 766.5.0 Image using CLI to your OpenStack Cloud
 
