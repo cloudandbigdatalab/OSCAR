@@ -1,7 +1,24 @@
-<header class="site-header">
+<header>
 
-  <div class="wrap title-wrap">
-    <a class="site-title" href="{{ site.baseurl }}/">{{ site.title }}</a>
+  <div class="jumbotron jumbopic" style="color:black;">
+  <div class="container-fluid text-center">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+        <h1> {{ page.title }} </h1>
+      </div>
+    </div>
+    </div>
+  </div>
+    <div class="col-sm-3 col-lg-3" id="myScrollspy" style="padding-left:2em;">
+      <ul class="nav nav-tabs nav-stacked" data-offset-top="350" data-spy="affix" style="width:320px;">
+          <li class="active" style="text-align:center;"><a href="{{site.baseurl}}/">Oscar</a></li>
+          <li><a href="{{site.baseurl}}/introduction">1. Introduction</a></li>
+          <li><a href="{{site.baseurl}}/requirements">2. Requirements</a></li>
+          <li><a href="{{site.baseurl}}/pre-deployment">3. Pre Deployment Setup</a></li>
+          <li><a href="{{site.baseurl}}/openstack-deployment">4. OpenStack Deployment</a></li>
+          <li><a href="{{site.baseurl}}/post-deployment">5. Post Deployment</a></li>
+
   </div>
 
 </header>
+<div class="col-sm-9 col-lg-9" style="max-width:1120px;">
