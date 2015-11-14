@@ -2,6 +2,8 @@
 layout: page
 title: Post Deployment
 permalink: /post-deployment/
+divlink: post-deployment
+postdeployment: class="active"
 
 ---
 
@@ -15,17 +17,17 @@ By default ```neutronclient``` should be installed on chameleon cloud nodes. If 
 pip install python-neutronclient
 ```
 
-From your project on Chalmeleon dashboard **download the api access** and **save** the contents to ```cc_openrc``` in the home directory of the controller node. These steps for requesting a pool of IP's from chameleon cloud can be executed from any machine, there is no restricition that this should be done from the contoller node itself. But Creating virtual external network for the OSCAR vDC should be done on chameleon cloud itself. 
+From your project on Chalmeleon dashboard **download the api access** and **save** the contents to ```cc_openrc``` in the home directory of the controller node. These steps for requesting a pool of IP's from chameleon cloud can be executed from any machine, there is no restricition that this should be done from the contoller node itself. But Creating virtual external network for the OSCAR vDC should be done on chameleon cloud itself.
 
 Source cc_openrc file and enter your chameleon account password. This file exports all credentials requeired for communicating with chameleon cloud as environmental variables and the following commands use these environment variables while talking to chameleon cloud.
 
 ```
-# Make sure you read the above two paragraphs and 
+# Make sure you read the above two paragraphs and
 # downloaded the required contents before proceeding forward.
 source cc_openrc
 ```
 
-Check to see if chameleon cloud is reponding for your neutron-clint commands. The following command gives a list for networs available on chamleon cloud. 
+Check to see if chameleon cloud is reponding for your neutron-clint commands. The following command gives a list for networs available on chamleon cloud.
 
 ```
 neutron net-list
@@ -87,14 +89,14 @@ unset OS_REGION_NAME
 
 #### Creating virtual external network for the OSCAR vDC
 
-The following steps would guide you in creating an virtual external network for OSCAR vDC. **List the containers running on the controller node and attach to the neutron agents container**. 
+The following steps would guide you in creating an virtual external network for OSCAR vDC. **List the containers running on the controller node and attach to the neutron agents container**.
 
 ```
 # List the containers
 lxc-ls
 ```
 
-In our case name of  **neutron agents container** was **aio1_neutron_agents_container-128a859f** so to attach to the container we used 
+In our case name of  **neutron agents container** was **aio1_neutron_agents_container-128a859f** so to attach to the container we used
 
 ```
 lxc-attach --name aio1_neutron_agents_container-128a859f
@@ -121,7 +123,3 @@ neutron router-gateway-set v-router v-ext-net
 ```
 
 The virtual external network is setup. The next steps would be to setup a private network using horizon, interfacing it with ```v-router``` and spinning an instance on private network.
-
-
-
-

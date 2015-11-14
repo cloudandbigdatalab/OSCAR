@@ -2,6 +2,8 @@
 layout: page
 title: Pre-deployment setup
 permalink: /pre-deployment/
+divlink: pre-deployment
+predeployment: class="active"
 ---
 
 ### Pre-deployment setup
@@ -58,7 +60,7 @@ nodes:
 
 Add the ip address of controller and compute hosts at appropriate section as shown above and save the file.
 
-#### Installing Ansible 
+#### Installing Ansible
 
 Ansible is required to deploy OpenStack using OSCAR project. There is a bootstrap script available in /opt/OSCAR/scripts directory which sets the ansible up for the user.
 
@@ -82,12 +84,12 @@ ansible-playbook bootstrap-openstack-play.yml
 
 The above command should have cloned openstack-ansible repo in /opt directory and changed some configuration files to suit the environment created.
 
-#### Enabling scp_if_true in /opt/openstack-ansible/playbooks/ansible.cfg 
+#### Enabling scp_if_true in /opt/openstack-ansible/playbooks/ansible.cfg
 
 Open /opt/openstack-ansible/playbooks/ansible.cfg using your favorite editor
 
 ```
-nano /opt/openstack-ansible/playbooks/ansible.cfg 
+nano /opt/openstack-ansible/playbooks/ansible.cfg
 ```
 
 add ```scp_if_true=True``` below ```[ssh_connection]``` section as shown below
@@ -110,5 +112,3 @@ timeout = 120
 ssh_args = -o ControlMaster=auto -o ControlPersist=60s -o TCPKeepAlive=yes -o ServerAliveInterval=5 -o ServerAliveCountMax=3
 scp_if_ssh=True
 ```
-
-

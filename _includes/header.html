@@ -10,13 +10,13 @@
     </div>
   </div>
     <div class="col-sm-3 col-lg-3" id="myScrollspy" style="padding-left:2em;">
-      <ul class="nav nav-tabs nav-stacked" data-offset-top="350" data-spy="affix" style="width:320px;">
-          <li class="active" style="text-align:center;"><a href="{{site.baseurl}}/">Oscar</a></li>
-          <li><a href="{{site.baseurl}}/introduction">1. Introduction</a></li>
-          <li><a href="{{site.baseurl}}/initial-setup/">2. Requirements</a></li>
-          <li><a href="{{site.baseurl}}/pre-deployment">3. Pre Deployment Setup</a></li>
-          <li><a href="{{site.baseurl}}/openstack-deployment">4. OpenStack Deployment</a></li>
-          <li><a href="{{site.baseurl}}/post-deployment">5. Post Deployment</a></li>
+      <ul class="nav nav-tabs nav-stacked" data-offset-top="260" data-spy="affix" style="width:320px;">
+          <li {{page.oscarstyle}} style="text-align:center;"><a href="{{site.baseurl}}/">Oscar</a></li>
+          <li {{page.introduction}}><a href="{{site.baseurl}}/introduction">1. Introduction</a></li>
+          <li {{page.initialsetup}}><a href="{{site.baseurl}}/initial-setup/">2. Requirements</a></li>
+          <li {{page.predeployment}}><a href="{{site.baseurl}}/pre-deployment">3. Pre Deployment Setup</a></li>
+          <li {{page.openstackdeployment}}><a href="{{site.baseurl}}/openstack-deployment">4. OpenStack Deployment</a></li>
+          <li {{page.postdeployment}}><a href="{{site.baseurl}}/post-deployment">5. Post Deployment</a></li>
 
   </div>
 
