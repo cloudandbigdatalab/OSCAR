@@ -20,9 +20,15 @@ openstack-ansible setup-hosts.yml
 
 openstack-ansible haproxy-install.yml (40 sec)
 
-# infra    22:15:57 to 
+# infra    22:15:57 to 22:31:30 (16 mins)
+
+
+openstack-ansible setup-infrastructure.yml
+
+# openstack 22:33:14 to 
 
 date +"%T"
-openstack-ansible setup-infrastructure.yml
+openstack-ansible setup-openstack.yml
 date +"%T"
+
 
