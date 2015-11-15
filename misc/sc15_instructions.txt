@@ -5,7 +5,6 @@
 cd /opt/OSCAR/scripts
 ./bootstrap-ansible.sh
 
-
 # bootstrap scripts for configuring the network the network in all the nodes (4 mins)
 
 cd /opt/OSCAR
@@ -16,19 +15,17 @@ ansible-playbook bootstrap-openstack-play.yml
 cd /opt/openstack-ansible/playbooks
 openstack-ansible setup-hosts.yml
 
-# ha proxy
+# ha proxy (40 sec)
 
-openstack-ansible haproxy-install.yml (40 sec)
+openstack-ansible haproxy-install.yml 
 
 # infra    22:15:57 to 22:31:30 (16 mins)
 
-
 openstack-ansible setup-infrastructure.yml
 
-# openstack 22:33:14 to 
+# openstack 22:33:14 to 23:02:01 (30 mins approx)
 
-date +"%T"
 openstack-ansible setup-openstack.yml
-date +"%T"
+
 
 
