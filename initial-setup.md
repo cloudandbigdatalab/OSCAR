@@ -6,7 +6,7 @@ permalink: /initial-setup/
 
 #### System requirements
 
-We strongly recommend using Ubuntu 14.04 as operating system for the servers. Openstack deployment using this project is developed and tested for usage with Ubuntu 14.04.   
+We strongly recommend using Ubuntu 14.04 as operating system for the servers. OpenStack deployment using this project is developed and tested for usage with Ubuntu 14.04.   
 
 #### Provisioning a bare metal server using chameleon cloud 
  
@@ -14,9 +14,9 @@ We strongly recommend using Ubuntu 14.04 as operating system for the servers. Op
  
 #### Key pair authentication
 
-OSCAR and OpenStack-ansible projects run based on ansible. For using ansible with the cluster the controller node has to have access to all the nodes along with itself. The access to the controller nodes can be granted using key pairs. Once the servers are up and running, create a key pair on controller node add the public key to authorized_keys of all the ***all nodes along with controller node itself***. Here are the set of instructions to do that.
+OSCAR and OpenStack-Ansible projects run based on ansible. For using ansible with the cluster the controller node has to have access to all the nodes along with itself. The access to the controller nodes can be granted using key- pairs. Once the servers are up and running, create a key pair on controller node add the public key to authorized_keys of ***all the nodes along with controller node itself***. Here are the set of instructions to do that.
 
-Create a key pair on controller node. Make sure that you are logged in as root user while performing these steps.
+Create a key-pair on controller node. Make sure that you are logged in as root user while performing these steps.
 
 ```
  ssh-keygen -f .ssh/id_rsa -N ""  
@@ -28,11 +28,11 @@ This command should have created two files ``` id_rsa ``` and ``` id_rsa.pub ```
 
 Adding the public key into authorized_keys file can be done in two ways. 
 
-   - Using ``` ssh-copy-id ``` 
+   1. Using ``` ssh-copy-id ``` 
 
-   - Manually adding the public key 
+   2. Manually adding the public key 
 
-##### Using ``` ssh-copy-id ``` 
+##### 1. Using ``` ssh-copy-id ``` 
 This method is simple and works fine when the root user of the nodes can be accessed using password. Use the following command
 
 ```
@@ -41,16 +41,16 @@ ssh-copy-id root@<host ip>
 
 Where host-ip should be replaced by ip address of all the servers including controller node itself.
 
-##### Manually adding the public key
+##### 2. Manually adding the public key
 In case of Chameleon cloud, password authentication is disabled by default. And if you can access the root user on the node only using private key then follow this method. 
 
-On your controller node open the open ``` ~/.ssh/id_rsa.pub ```
+On your controller node open the open ``` ~/.ssh/id_rsa.pub ``` and copy the public key
 
 ```
 cat ~/.ssh/id_rsa.pub
 ```
 
-ssh to the node and change to root user, 
+ssh to the respective compute node and change to root user, 
 
 ```
 ssh userid@<node-ip>
