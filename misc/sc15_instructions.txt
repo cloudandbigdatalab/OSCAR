@@ -1,0 +1,28 @@
+# Github is already cloned and keys are already setup
+
+# Installting ansible commands (2 mins)
+
+cd /opt/OSCAR/scripts
+./bootstrap-ansible.sh
+
+
+# bootstrap scripts for configuring the network the network in all the nodes (4 mins)
+
+cd /opt/OSCAR
+ansible-playbook bootstrap-openstack-play.yml
+
+# Now setting up the hosts installing packages preping the hosts for OpenStack (7 mins)
+
+cd /opt/openstack-ansible/playbooks
+openstack-ansible setup-hosts.yml
+
+# ha proxy
+
+openstack-ansible haproxy-install.yml (40 sec)
+
+# infra    22:15:57 to 
+
+date +"%T"
+openstack-ansible setup-infrastructure.yml
+date +"%T"
+
