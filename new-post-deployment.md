@@ -128,5 +128,5 @@ To create internal network
 
 ```
 neutron net-create --provider:network_type=vxlan --shared internal_net
-neutron subnet-create oci_net 192.168.1.0/16 --name oci_subnet --dns-nameservers list=true 8.8.8.8 
+neutron subnet-create internal_net 192.168.1.0/16 --name internal_subnet --dns-nameservers list=true 8.8.8.8 
 ```
