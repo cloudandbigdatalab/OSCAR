@@ -123,3 +123,10 @@ neutron router-gateway-set v-router v-ext-net
 ```
 
 The virtual external network is setup. The next steps would be to setup a private network using horizon, interfacing it with ```v-router``` and spinning an instance on private network.
+
+To create internal network
+
+```
+neutron net-create --provider:network_type=vxlan --shared internal_net
+neutron subnet-create oci_net 192.168.1.0/16 --name oci_subnet --dns-nameservers list=true 8.8.8.8 
+```
