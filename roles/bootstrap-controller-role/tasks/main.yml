@@ -21,3 +21,12 @@
 
 - name: Run the bootstrap-controller.sh script
   script: bootstrap-controller.sh {{ controller_mgmt_ip }} {{ container_network }} {{ tunnel_network }} {{ storage_network }}
+
+- name: Drop in openstack_user_config.yml
+  template:
+    src: openstack_user_config.yml.j2
+    dest: "/etc/openstack_deploy/openstack_user_config.yml"
+    owner: "root"
+    group: "root"
+  tags:
+    - copy-openstack-user-config

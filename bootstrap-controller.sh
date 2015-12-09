@@ -215,48 +215,6 @@ done
 # Instead of moving the AIO files in place, it will move our custom
 # configs in place.
 cp -R /opt/OSCAR/openstack_deploy /etc/openstack_deploy/
-cp /opt/OSCAR/openstack_deploy/openstack_user_config.yml.template /etc/openstack_deploy/openstack_user_config.yml
-
-#Substitue the IPs in the openstack_user_config.yml with the user-defined IPs
-sed -i "s/MGMTIP/$MANAGEMENT_IP/g" /etc/openstack_deploy/openstack_user_config.yml
-
-#Adding compute nodes and their management ip's from management_ips file in openstack_user_config.yml
-# ***** Needs some testing 
-
-break_var=$(sed '/^$/d;1,/computes:/d;/- /d' /etc/oscar/oscar.conf | sed '/^$/d;1,/computes:/d;/- /d' /etc/oscar/oscar.conf | sed '1!d')
-
-computes_count=$(sed "/^$/d;1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf | wc -l)
-
-#echo $computes_count
-#sed "1,/computes:/d;/$break_var/,/^\s*$/d" /etc/oscar/oscar.conf
-
-management_ip=$MANAGEMENT_IP
-management_ip_base=$(echo $management_ip | cut -d"." -f1-3)
-#echo $management_ip_base
-for ((i=1; i<=computes_count; i++)); do
-   line=$management_ip_base"."$(( 100 + $i ))
-   sed -i 's/.*compute_hosts:.*/&\n   compute'$i':/' /etc/openstack_deploy/openstack_user_config.yml
-   sed -i 's/.*compute'$i':.*/&\n      ip: '$line'/' /etc/openstack_deploy/openstack_user_config.yml
-   #echo $management_ip_base"."$(( 100 + $i ))
-done
-
-
-
-
-#compute_count=1
-#while IFS='' read -r line || [[ -n "$line" ]]; do
-#   sed -i 's/.*compute_hosts:.*/&\n   compute'$compute_count':/' /etc/openstack_deploy/openstack_user_config.yml
-#   sed -i 's/.*compute'$compute_count':.*/&\n      ip: '$line'/' /etc/openstack_deploy/openstack_user_config.yml
-#   compute_count=$(($compute_count + 1))
-#done < "/opt/OSCAR/management_ips"
-#sed -i "s/COMPUTE1IP/$MANAGEMENT_IP_COMPUTE1/g" /etc/openstack_deploy/openstack_user_config.yml
-#sed -i "s/COMPUTE2IP/$MANAGEMENT_IP_COMPUTE2/g" /etc/openstack_deploy/openstack_user_config.yml
-#sed -i "s/COMPUTE3IP/$MANAGEMENT_IP_COMPUTE3/g" /etc/openstack_deploy/openstack_user_config.yml
-
-# Populate the cidr_networks in the /etc/openstack_deploy/openstack_user_config.yml
-sed -i "s/CONTAINER_NETWORK/$CONTAINER_NETWORK/g" /etc/openstack_deploy/openstack_user_config.yml
-sed -i "s/TUNNEL_NETWORK/$TUNNEL_NETWORK/g" /etc/openstack_deploy/openstack_user_config.yml
-sed -i "s/STORAGE_NETWORK/$STORAGE_NETWORK/g" /etc/openstack_deploy/openstack_user_config.yml 
 
 # Ensure the conf.d directory exists
 if [ ! -d "/etc/openstack_deploy/conf.d" ];then
@@ -320,7 +278,6 @@ sed -i "s/external_lb_vip_address:.*/external_lb_vip_address: ${PUBLIC_ADDRESS}/
 #echo "nova_virt_type: ${NOVA_VIRT_TYPE}" | tee -a /etc/openstack_deploy/user_variables.yml
 #
 #
-
 
 ## Set the running kernel as the required kernel
 echo "required_kernel: $(uname --kernel-release)" | tee -a /etc/openstack_deploy/user_variables.yml
