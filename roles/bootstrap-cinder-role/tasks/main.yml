@@ -1,0 +1,20 @@
+- name: Copy over the compute-interfaces template
+  template:
+    src: cinder-interfaces.cfg.j2
+    dest: "/etc/network/interfaces.d/cinder-interfaces.cfg"
+    owner: "root"
+    group: "root"
+  tags:
+    - copy-network-template
+
+- name: Copy over the interfaces template
+  template:
+    src: interfaces.j2
+    dest: "/etc/network/interfaces"
+    owner: "root"
+    group: "root"
+  tags:
+    - copy-network-interfaces
+
+- name: Run the bootstrap-compute.sh script (It's the same for cinder nodes)
+  script: bootstrap-compute.sh {{ hostvars[inventory_hostname]['cinder_mgmt_ip'] }} {{ hostvars[inventory_hostname]['cinder_vxlan_ip'] }} {{ hostvars[inventory_hostname]['cinder_storage_ip'] }}

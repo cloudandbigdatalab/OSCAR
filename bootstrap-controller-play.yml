@@ -1,5 +1,5 @@
 ---
-- name: Bootstrap the compute nodes
+- name: Bootstrap the controller node
   hosts: controller
   user: root
   tasks:

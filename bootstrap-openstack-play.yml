@@ -3,3 +3,4 @@
 # bootstrap-computes-play
 - include: bootstrap-controller-play.yml
 - include: bootstrap-computes-play.yml
+- include: bootstrap-cinder-play.yml

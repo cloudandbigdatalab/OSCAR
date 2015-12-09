@@ -95,6 +95,9 @@ compute_hosts:
     ip: {{ hostvars[compute_host]['compute_mgmt_ip'] }}
 {% endfor %}
 
+
+
+{% if groups['cinder_nodes']|length == 0 %}
 storage_hosts:
   aio1:
     ip: {{ controller_mgmt_ip }}
@@ -105,6 +108,16 @@ storage_hosts:
           volume_group: cinder-volumes
           volume_driver: cinder.volume.drivers.lvm.LVMVolumeDriver
           volume_backend_name: LVM_iSCSI
+{% else %}
+storage_hosts:
+{% for cinder_host in groups['cinder_nodes'] %}
+  {{ cinder_host }}:
+    ip: {{ hostvars[cinder_host]['cinder_mgmt_ip'] }}
+    container_vars:
+      cinder_backends:
+        {{ hostvars[cinder_host]['backend_config'] | to_json }}
+{% endfor %}
+{% endif %}
 
 log_hosts:
   aio1:

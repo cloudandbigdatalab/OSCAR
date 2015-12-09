@@ -1,0 +1,9 @@
+---
+- name: Bootstrap the cinder node(s)
+  hosts: cinder_nodes
+  user: root
+  roles:
+    - role: bootstrap-cinder-role
+      tags:
+        - "bootstrap-cinder"
+  
