@@ -11,3 +11,19 @@ nodes:
     - 10.20.108.23
     - 10.20.108.24
     - 10.20.108.25
+  # ----- cinder -----
+  # This section directly maps to the ansible variables
+  # in OpenStack-Ansible.
+  # See https://github.com/openstack/openstack-ansible/blob/master/etc/openstack_deploy/openstack_user_config.yml.example#L471-L643
+  # NOTE: Cannot be stacked with other nodes. Must be it's own host. Or
+  # if this section is left blank, OSCAR will assume there is a volume-group
+  # named cinder-volumes on the controller node and it can be used for block storage.
+  cinder:
+    ips: 
+      - 10.140.82.9
+    backend_configurations:
+          limit_container_types: cinder_volume
+          lvm:
+            volume_group: cinder-volumes
+            volume_driver: cinder.volume.drivers.lvm.LVMVolumeDriver
+            volume_backend_name: LVM_iSCSI
