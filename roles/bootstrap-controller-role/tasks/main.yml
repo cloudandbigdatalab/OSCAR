@@ -21,3 +21,10 @@
 
 - name: Run the bootstrap-controller.sh script
   script: bootstrap-controller.sh {{ controller_mgmt_ip }} {{ container_network }} {{ tunnel_network }} {{ storage_network }}
+
+- name: Change cinder is_metal to flase(Cinder doesn't work with OSCAR on this branch)
+  replace:
+    dest: /etc/openstack_deploy/env.d/cinder.yml
+    regexp: '(\s+)is_metal: true'
+    replace: '\1is_metal: false'
+

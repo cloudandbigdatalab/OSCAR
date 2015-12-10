@@ -23,6 +23,12 @@ heat_ceilometer_enabled: False
 cinder_ceilometer_enabled: False
 glance_ceilometer_enabled: False
 nova_ceilometer_enabled: False
+neutron_ceilometer_enabled: False
+
+## Aodh Options
+aodh_db_type: mongodb
+aodh_db_ip: localhost
+aodh_db_port: 27017
 
 ## Glance Options
 # Set glance_default_store to "swift" if using Cloud Files or swift backend
@@ -62,9 +68,18 @@ glance_swift_store_endpoint_type: internalURL
 # dhcp_domain:
 
 ## Glance with Swift
-### Extra options when configuring swift as a glance back-end.
-### By default it will use the local swift install
-### Set these when using a remote swift as a glance backend
+# Extra options when configuring swift as a glance back-end. By default it
+# will use the local swift installation. Set these when using a remote swift
+# as a glance backend.
+#
+# NOTE: Ensure that the auth version matches your authentication endpoint.
+#
+# NOTE: If the password for glance_swift_store_key contains a dollar sign ($),
+# it must be escaped with an additional dollar sign ($$), not a backslash. For
+# example, a password of "super$ecure" would need to be entered as
+# "super$$ecure" below.  See Launchpad Bug #1259729 for more details.
+#
+#glance_swift_store_auth_version: 3
 #glance_swift_store_auth_address: "https://some.auth.url.com"
 #glance_swift_store_user: "OPENSTACK_TENANT_ID:OPENSTACK_USER_NAME"
 #glance_swift_store_key: "OPENSTACK_USER_PASSWORD"
@@ -127,6 +142,12 @@ ssl_cipher_suite: "ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AE
 #rabbitmq_user_ssl_cert: <path to cert on ansible deployment host>
 #rabbitmq_user_ssl_key: <path to cert on ansible deployment host>
 #rabbitmq_user_ssl_ca_cert: <path to cert on ansible deployment host>
+#
+# By default, openstack-ansible configures all OpenStack services to talk to
+# RabbitMQ over encrypted connections on port 5671. To opt-out of this default,
+# set the rabbitmq_use_ssl variable to 'false'. The default setting of 'true'
+# is highly recommended for securing the contents of RabbitMQ messages.
+#rabbitmq_use_ssl: true
 
 ## Additional pinning generator that will allow for more packages to be pinned as you see fit.
 ## All pins allow for package and versions to be defined. Be careful using this as versions

@@ -3,9 +3,11 @@
 # using the openstack-ansible project.
 
 # Install ansible
-pushd /opt/OSCAR
+pushd /opt/openstack-ansible
   ./scripts/bootstrap-ansible.sh
+popd
 
+pushd /opt/OSCAR
 # Run bootstrap playbooks
   ansible-playbook bootstrap-openstack-play.yml
 popd

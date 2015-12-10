@@ -36,7 +36,7 @@ export TUNNEL_NETWORK=$(echo $TUNNEL_NETWORK | sed 's/\//\\\//g')
 STORAGE_NETWORK=$4
 export STORAGE_NETWORK=$(echo $STORAGE_NETWORK | sed 's/\//\\\//g')
 export DEFAULT_PASSWORD="openstack"
-export OPENSTACK_ANSIBLE_TAG="11.2.3"
+export OPENSTACK_ANSIBLE_TAG="12.0.2"
 
 export ADMIN_PASSWORD=${ADMIN_PASSWORD:-$DEFAULT_PASSWORD}
 export PUBLIC_INTERFACE=${PUBLIC_INTERFACE:-$(ip route show | awk '/default/ { print $NF }')}
@@ -268,7 +268,7 @@ cp /opt/openstack-ansible/etc/openstack_deploy/user_variables.yml /etc/openstack
 cp /opt/openstack-ansible/etc/openstack_deploy/user_secrets.yml /etc/openstack_deploy/user_secrets.yml
 
 # Generate the passwords
-/opt/OSCAR/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
+/opt/openstack-ansible/scripts/pw-token-gen.py --file /etc/openstack_deploy/user_secrets.yml
 
 #change the generated passwords for the OpenStack (admin)
 sed -i "s/keystone_auth_admin_password:.*/keystone_auth_admin_password: ${ADMIN_PASSWORD}/" /etc/openstack_deploy/user_secrets.yml
