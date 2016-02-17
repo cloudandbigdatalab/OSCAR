@@ -11,4 +11,4 @@ twitter_username:
 github_username:  cloudandbigdatalab
 
 # Build settings
-markdown: redcarpet
+markdown: kramdown
